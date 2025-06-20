@@ -1,0 +1,32 @@
+{
+  "name": "@brickninjaapi/fetch",
+  "version": "0.0.1",
+  "description": "Tiny wrapper around fetch that returns type-safe responses",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brickninja-org/brickninjaapi-ts.git",
+    "directory": "packages/fetch"
+  },
+  "keywords": [
+    "brickninjaapi",
+    "fetch",
+    "brickninja",
+    "api"
+  ],
+  "scripts": {
+    "test": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "@brickninjaapi/types": "~0.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

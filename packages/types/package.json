@@ -1,0 +1,39 @@
+{
+  "name": "@brickninjaapi/types",
+  "version": "0.0.1",
+  "description": "TypeScript types for all datastructures used by the Brick Ninja API",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brickninja-org/brickninjaapi-ts.git",
+    "directory": "packages/types"
+  },
+  "exports": {
+    "./endpoints": {
+      "types": "./endpoints.ts"
+    },
+    "./data/*": {
+      "types": "./data/*.ts"
+    },
+    "./schema": {
+      "types": "./schema.ts"
+    }
+  },
+  "keywords": [
+    "gbrickninjaapi",
+    "types",
+    "brickninja",
+    "api",
+    "typescript"
+  ],
+  "scripts": {
+    "test": "tsc",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

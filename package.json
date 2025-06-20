@@ -1,0 +1,17 @@
+{
+  "name": "brickninjaapi",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "npm test -ws",
+    "release": "npm run build -ws && changeset publish"
+  },
+  "dependencies": {
+    "@changesets/cli": "2.29.5"
+  },
+  "devDependencies": {
+    "@changeset-bot/changelog": "0.0.4"
+  }
+}
