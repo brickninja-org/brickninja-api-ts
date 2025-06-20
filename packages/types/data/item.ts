@@ -10,8 +10,9 @@ type ItemBase = {
   details?: {
     color_id?: number;
     design_id?: number;
-    piece_type?: 'Duplo' | 'LEGO' | 'Technic'
-    type?: 'Instruction' | 'Plate'
+    instruction_item_ids?: number[];
+    piece_type?: 'DUPLO' | 'LEGO' | 'TECHNIC'
+    type?: 'Default' | 'Instruction' | 'Plate'
   }
   flags: string[];
   icon?: string;

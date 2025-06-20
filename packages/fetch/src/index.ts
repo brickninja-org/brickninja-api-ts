@@ -10,11 +10,11 @@ type Args<Url extends string, Schema extends SchemaVersion> = RequiredKeys<Optio
 
 export async function fetchBrickNinjaApi<
   Url extends KnownEndpoint | (string & {}),
-  Schema extends SchemaVersion = 'latest',
+  Schema extends SchemaVersion = undefined
 >(
   ...[endpoint, options]: Args<Url, Schema>
 ): Promise<EndpointType<Url, Schema>> {
-  const url = new URL('https://brick-ninja-api.vercel.app/');
+  const url = new URL(endpoint, 'https://brick-ninja-api.vercel.app/');
 
   if (options.schema) {
     url.searchParams.set('v', options.schema);
@@ -49,13 +49,13 @@ export async function fetchBrickNinjaApi<
   // call the API
   const response = await fetch(request);
 
-  // call the onResponse handler if it exists
+  // call onResponse handler
   await options.onResponse?.(response);
 
   // check if the response is json (`application/json; charset=utf-8`)
   const isJson = response.headers.get('content-type').startsWith('application/json');
 
-  // censor access token in the url to not leak it in error messages
+  // censor access token in url to not leak it in error messages
   const erroredUrl = hasAccessToken(options)
     ? url.toString().replace(options.accessToken, '***')
     : url.toString();
@@ -77,11 +77,16 @@ export async function fetchBrickNinjaApi<
 
   // if the response is not JSON, throw an error
   if (!isJson) {
-    throw new BrickNinjaApiError(`The Brick Ninja API call to '${erroredUrl}'did not respond with a JSON response.`, response);
+    throw new BrickNinjaApiError(`The Brick Ninja API call to '${erroredUrl}' did not respond with a JSON response`, response);
   }
 
-  // parse the response as JSON
+  // parse json
   const json = await response.json();
+
+  // check that json is not `["v1", "v2"]` which sometimes happens for authenticated endpoints
+  if(url.toString() !== 'https://brick-ninja-api.vercel.app/' && Array.isArray(json) && json.length === 2 && json[0] === 'v1' && json[1] === 'v2') {
+    throw new BrickNinjaApiError(`The Brick Ninja API call to '${erroredUrl}' did returned an invalid response (["v1", "v2"])`, response);
+  }
 
   // TODO: catch more errors
 
