@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 0.0.5
+
+### Patch Changes
+
+- Add color endpoint
+
 ## 0.0.4
 
 ### Patch Changes

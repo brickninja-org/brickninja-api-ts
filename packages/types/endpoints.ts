@@ -1,3 +1,4 @@
+import type { Color } from "./data/color";
 import type { Item } from "./data/item";
 import type { SchemaVersion } from "./schema";
 
@@ -5,12 +6,15 @@ export type KnownAuthenticatedEndpoint =
   | string;
 
 export type KnownUnauthorizedEndpoint =
+  | '/v1/colors'
   | '/v1/items';
 
 export type KnownBulkExpandedEndpoint =
+  | '/v1/colors'
   | '/v1/items';
 
 export type KnownLocalizedEndpoint =
+  | '/v1/colors'
   | '/v1/items';
 
 export type KnownEndpoint = KnownAuthenticatedEndpoint | KnownUnauthorizedEndpoint | KnownBulkExpandedEndpoint | KnownLocalizedEndpoint;
@@ -66,6 +70,7 @@ export type OptionsByEndpoint<Endpoint extends string> =
 
 // result type for endpoint
 export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema extends SchemaVersion = undefined> =
+  Url extends BulkExpandedEndpointUrl<'/v1/colors', number> ? BulkExpandedResponseType<'/v1/colors', Url, number, Color> :
   Url extends BulkExpandedEndpointUrl<'/v1/items', number> ? BulkExpandedResponseType<'/v1/items', Url, number, Item<Schema>> :
   unknown;
 
