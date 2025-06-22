@@ -12,7 +12,7 @@ export type Color = {
   categories: string[];
 
   /** Appearance on plastic */
-  platic: ColorMaterial;
+  plastic: ColorMaterial;
 
   /** Item id of the dye */
   item?: number;
