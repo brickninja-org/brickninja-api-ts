@@ -1,5 +1,11 @@
 # @brickninjaapi/fetch
 
+## 0.0.6
+
+### Patch Changes
+
+- Bump versions
+
 ## 0.0.5
 
 ### Patch Changes

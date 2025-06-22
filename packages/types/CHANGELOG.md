@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 0.0.7
+
+### Patch Changes
+
+- Bump versions
+
 ## 0.0.6
 
 ### Patch Changes
