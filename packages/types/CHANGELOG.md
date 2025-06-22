@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 0.0.9
+
+### Patch Changes
+
+- Add new types
+
 ## 0.0.8
 
 ### Patch Changes
