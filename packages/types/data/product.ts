@@ -34,3 +34,11 @@ export interface Product {
 }
 
 export type ProductFlag = 'NoFigures' | 'ShowInCatalog';
+
+export interface ProductCategory {
+  /** The category id */
+  id: number;
+
+  /** The name of the category */
+  name: string;
+}

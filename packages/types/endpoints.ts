@@ -1,22 +1,25 @@
 import type { Color } from "./data/color";
 import type { Item } from "./data/item";
-import type { Product } from "./data/product";
+import type { Product, ProductCategory } from "./data/product";
 import type { SchemaVersion } from "./schema";
 
 export type KnownUnauthorizedEndpoint =
   | '/v1/build'
   | '/v1/colors'
   | '/v1/items'
+  | '/v1/products/categories'
   | '/v1/products';
 
 export type KnownBulkExpandedEndpoint =
   | '/v1/colors'
   | '/v1/items'
+  | '/v1/products/categories'
   | '/v1/products';
 
 export type KnownLocalizedEndpoint =
   | '/v1/colors'
   | '/v1/items'
+  | '/v1/products/categories'
   | '/v1/products';
 
 export type KnownEndpoint = KnownUnauthorizedEndpoint | KnownBulkExpandedEndpoint | KnownLocalizedEndpoint;
@@ -70,6 +73,7 @@ export type OptionsByEndpoint<Endpoint extends string> =
 export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema extends SchemaVersion = undefined> =
   Url extends BulkExpandedEndpointUrl<'/v1/colors', number> ? BulkExpandedResponseType<'/v1/colors', Url, number, Color> :
   Url extends BulkExpandedEndpointUrl<'/v1/items', number> ? BulkExpandedResponseType<'/v1/items', Url, number, Item<Schema>> :
+  Url extends BulkExpandedEndpointUrl<'/v1/products/categories', number> ? BulkExpandedResponseType<'/v1/products/categories', Url, number, ProductCategory> :
   Url extends BulkExpandedEndpointUrl<'/v1/products', number> ? BulkExpandedResponseType<'/v1/products', Url, number, Product> :
   // fallback for all bulk expanded urls
   Url extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint, string | number> ? BulkExpandedResponseType<KnownBulkExpandedEndpoint, Url, string | number, unknown> :
