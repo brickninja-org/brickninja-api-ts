@@ -28,12 +28,45 @@ export interface Product {
 
   /** Product details */
   details?: {
+    /** The attributes of this product */
+    attributes?: ProductAttribute[];
     /** The subtype of this product */
     type?: string;
   }
+
+  /** The barcodes of the product */
+  barcodes?: Barcode[];
+
+  /** The region information for the product */
+  region_info?: RegionInfo;
 }
 
 export type ProductFlag = 'NoFigures' | 'ShowInCatalog';
+
+export type ProductAttribute = {
+  /** The label of the attribute */
+  text: string;
+  /** The type of the attribute */
+  type: 'ageRange' | 'dimensionsInMillimeters' | 'figureCount' | 'pieceCount' | 'weightInGrams'
+  /** The value of the attribute */
+  value: string | number | Array<string | number>;
+}
+
+export type Barcode = {
+  /** The type of the barcode */
+  type: 'UPC' | 'EAN' | 'ISBN' | 'QR';
+  /** The value of the barcode */
+  value: string;
+}
+
+export type RegionInfo = Record<'CA' | 'DE' | 'GB' | 'US', {
+  /** The recommended retail price */
+  price: number;
+  /** The release date */
+  release: Date;
+  /** The insider points for the product */
+  points?: number;
+}>;
 
 export interface ProductCategory {
   /** The category id */
