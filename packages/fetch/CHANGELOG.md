@@ -1,5 +1,12 @@
 # @brickninjaapi/fetch
 
+## 0.0.8
+
+### Patch Changes
+
+- 4655269: New release
+- Bump versions
+
 ## 0.0.7
 
 ### Patch Changes

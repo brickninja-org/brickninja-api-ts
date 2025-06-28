@@ -1,5 +1,12 @@
 # @brickninjaapi/types
 
+## 0.0.11
+
+### Patch Changes
+
+- 4655269: New release
+- Bump versions
+
 ## 0.0.10
 
 ### Patch Changes
