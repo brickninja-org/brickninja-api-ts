@@ -1,4 +1,5 @@
 import type { Color } from "./data/color";
+import type { Element } from './data/element';
 import type { Item } from "./data/item";
 import type { Product, ProductCategory } from "./data/product";
 import type { SchemaVersion } from "./schema";
