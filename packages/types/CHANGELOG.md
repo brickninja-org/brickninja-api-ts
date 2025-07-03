@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 0.0.14
+
+### Patch Changes
+
+- 1d52878: Update element endpoint
+
 ## 0.0.13
 
 ### Patch Changes
