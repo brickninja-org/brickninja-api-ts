@@ -1,6 +1,6 @@
 {
   "name": "@brickninjaapi/fetch",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Tiny wrapper around fetch that returns type-safe responses",
   "license": "MIT",
   "main": "dist/index.js",
@@ -24,7 +24,7 @@
     "typescript": "5.8.3"
   },
   "peerDependencies": {
-    "@brickninjaapi/types": "~0.0.11"
+    "@brickninjaapi/types": "~0.0.13"
   },
   "publishConfig": {
     "access": "public"
