@@ -30,15 +30,16 @@ export interface Product {
   details?: {
     /** The attributes of this product */
     attributes?: ProductAttribute[];
+
     /** The subtype of this product */
     type?: string;
+
+    /** The barcodes of the product */
+    barcodes?: Barcode[];
+
+    /** The region information for the product */
+    region_info?: RegionInfo;
   }
-
-  /** The barcodes of the product */
-  barcodes?: Barcode[];
-
-  /** The region information for the product */
-  region_info?: RegionInfo;
 }
 
 export type ProductFlag = 'NoFigures' | 'ShowInCatalog';
@@ -54,7 +55,7 @@ export type ProductAttribute = {
 
 export type Barcode = {
   /** The type of the barcode */
-  type: 'UPC' | 'EAN' | 'ISBN' | 'QR';
+  type: 'UPC' | 'EAN' | 'ISBN';
   /** The value of the barcode */
   value: string;
 }
