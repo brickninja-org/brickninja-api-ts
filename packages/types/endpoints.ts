@@ -6,18 +6,21 @@ import type { SchemaVersion } from "./schema";
 export type KnownUnauthorizedEndpoint =
   | '/v1/build'
   | '/v1/colors'
+  | '/v1/elements'
   | '/v1/items'
   | '/v1/products/categories'
   | '/v1/products';
 
 export type KnownBulkExpandedEndpoint =
   | '/v1/colors'
+  | '/v1/elements'
   | '/v1/items'
   | '/v1/products/categories'
   | '/v1/products';
 
 export type KnownLocalizedEndpoint =
   | '/v1/colors'
+  | '/v1/elements'
   | '/v1/items'
   | '/v1/products/categories'
   | '/v1/products';
@@ -72,6 +75,7 @@ export type OptionsByEndpoint<Endpoint extends string> =
 // result type for endpoint
 export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema extends SchemaVersion = undefined> =
   Url extends BulkExpandedEndpointUrl<'/v1/colors', number> ? BulkExpandedResponseType<'/v1/colors', Url, number, Color> :
+  Url extends BulkExpandedEndpointUrl<'/v1/elements', number> ? BulkExpandedResponseType<'/v1/elements', Url, number, Element> :
   Url extends BulkExpandedEndpointUrl<'/v1/items', number> ? BulkExpandedResponseType<'/v1/items', Url, number, Item<Schema>> :
   Url extends BulkExpandedEndpointUrl<'/v1/products/categories', number> ? BulkExpandedResponseType<'/v1/products/categories', Url, number, ProductCategory> :
   Url extends BulkExpandedEndpointUrl<'/v1/products', number> ? BulkExpandedResponseType<'/v1/products', Url, number, Product> :
