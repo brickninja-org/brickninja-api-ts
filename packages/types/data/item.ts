@@ -11,12 +11,12 @@ type ItemBase = {
     color_id?: number;
     design_id?: number;
     instruction_item_ids?: number[];
-    piece_type?: 'DUPLO' | 'LEGO' | 'TECHNIC'
-    type?: 'Default' | 'Instruction' | 'Plate'
+    category?: string;
+    type?: 'Default' | 'DUPLO' | 'LEGO' | 'TECHNIC' | 'Instruction' | 'StickerSheet';
   }
-  flags: string[];
+  flags?: string[];
   icon?: string;
   id: number;
   name: string;
-  type: 'Container' | 'Element' | 'Product'
+  type: 'Container' | 'Element' | 'Product';
 };

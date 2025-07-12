@@ -9,6 +9,7 @@ export type KnownUnauthorizedEndpoint =
   | '/v1/colors'
   | '/v1/elements'
   | '/v1/items'
+  | '/v1/items/${string}/container-contents'
   | '/v1/products/categories'
   | '/v1/products';
 
@@ -35,11 +36,11 @@ type WithParameters<Url extends string, Parameters extends string | undefined = 
 
 // helper for paginated endpoints
 type PaginationParameters = `page=${number}` | `page_size=${number}` | CombineParameters<`page=${number}`, `page_size=${number}`>;
-type PaginatedEndpointUrl<Endpoint extends KnownEndpoint> = Endpoint | WithParameters<Endpoint, PaginationParameters>;
+type PaginatedEndpointUrl<Endpoint extends KnownEndpoint> = Endpoint | WithParameters<Endpoint, PaginationParameters>
 
 // helper types for bulk requests
-type BulkExpandedSingleEndpointUrl<Endpoint extends KnownBulkExpandedEndpoint, Id extends string | number> = `${Endpoint}/${Id}` | WithParameters<Endpoint, `id=${Id}`>;
-type BulkExpandedManyEndpointUrl<Endpoint extends KnownBulkExpandedEndpoint> = WithParameters<Endpoint, `ids=${string}` | PaginationParameters>;
+type BulkExpandedSingleEndpointUrl<Endpoint extends KnownBulkExpandedEndpoint, Id extends string | number> = `${Endpoint}/${Id}` | WithParameters<Endpoint, `id=${Id}`>
+type BulkExpandedManyEndpointUrl<Endpoint extends KnownBulkExpandedEndpoint> = WithParameters<Endpoint, `ids=${string}` | PaginationParameters>
 type BulkExpandedEndpointUrl<Endpoint extends KnownBulkExpandedEndpoint, Id extends string | number> =
   Endpoint | BulkExpandedSingleEndpointUrl<Endpoint, Id> |  BulkExpandedManyEndpointUrl<Endpoint>;
 
@@ -59,7 +60,7 @@ type BulkExpandedResponseType<Endpoint extends KnownBulkExpandedEndpoint, Url ex
 type Options = {};
 
 export type LocalizedOptions = {
-  language?: 'en' | 'nl';
+  language?: 'de' | 'en' | 'es' | 'fr' | 'nl';
 };
 
 export type AuthenticatedOptions = {
@@ -75,6 +76,7 @@ export type OptionsByEndpoint<Endpoint extends string> =
 
 // result type for endpoint
 export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema extends SchemaVersion = undefined> =
+  Url extends `/v1/items/${string}/container-contents` ? { id: number; item_id: number; quantity: number; }[] :
   Url extends BulkExpandedEndpointUrl<'/v1/colors', number> ? BulkExpandedResponseType<'/v1/colors', Url, number, Color> :
   Url extends BulkExpandedEndpointUrl<'/v1/elements', number> ? BulkExpandedResponseType<'/v1/elements', Url, number, Element> :
   Url extends BulkExpandedEndpointUrl<'/v1/items', number> ? BulkExpandedResponseType<'/v1/items', Url, number, Item<Schema>> :
