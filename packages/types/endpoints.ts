@@ -1,5 +1,7 @@
 import type { Color } from "./data/color";
 import type { Element } from './data/element';
+import type { ElementCategory } from "./data/element-category";
+import type { ElementGroup } from "./data/element-group";
 import type { Item } from "./data/item";
 import type { Product, ProductCategory } from "./data/product";
 import type { SchemaVersion } from "./schema";
@@ -8,6 +10,8 @@ export type KnownUnauthorizedEndpoint =
   | '/v1/build'
   | '/v1/colors'
   | '/v1/elements'
+  | '/v1/elements/categories'
+  | '/v1/elements/groups'
   | '/v1/items'
   | '/v1/items/${string}/container-contents'
   | '/v1/products/categories'
@@ -16,6 +20,8 @@ export type KnownUnauthorizedEndpoint =
 export type KnownBulkExpandedEndpoint =
   | '/v1/colors'
   | '/v1/elements'
+  | '/v1/elements/categories'
+  | '/v1/elements/groups'
   | '/v1/items'
   | '/v1/products/categories'
   | '/v1/products';
@@ -23,6 +29,8 @@ export type KnownBulkExpandedEndpoint =
 export type KnownLocalizedEndpoint =
   | '/v1/colors'
   | '/v1/elements'
+  | '/v1/elements/categories'
+  | '/v1/elements/groups'
   | '/v1/items'
   | '/v1/products/categories'
   | '/v1/products';
@@ -78,6 +86,8 @@ export type OptionsByEndpoint<Endpoint extends string> =
 export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema extends SchemaVersion = undefined> =
   Url extends `/v1/items/${string}/container-contents` ? { id: number; item_id: number; quantity: number; }[] :
   Url extends BulkExpandedEndpointUrl<'/v1/colors', number> ? BulkExpandedResponseType<'/v1/colors', Url, number, Color> :
+  Url extends BulkExpandedEndpointUrl<'/v1/elements/categories', number> ? BulkExpandedResponseType<'/v1/elements/categories', Url, number, ElementCategory> :
+  Url extends BulkExpandedEndpointUrl<'/v1/elements/groups', number> ? BulkExpandedResponseType<'/v1/elements/groups', Url, number, ElementGroup> :
   Url extends BulkExpandedEndpointUrl<'/v1/elements', number> ? BulkExpandedResponseType<'/v1/elements', Url, number, Element> :
   Url extends BulkExpandedEndpointUrl<'/v1/items', number> ? BulkExpandedResponseType<'/v1/items', Url, number, Item<Schema>> :
   Url extends BulkExpandedEndpointUrl<'/v1/products/categories', number> ? BulkExpandedResponseType<'/v1/products/categories', Url, number, ProductCategory> :

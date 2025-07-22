@@ -1,5 +1,12 @@
 # @brickninjaapi/types
 
+## 0.0.18
+
+### Patch Changes
+
+- Add new endpoints
+- Bump versions
+
 ## 0.0.17
 
 ### Patch Changes
