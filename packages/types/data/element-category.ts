@@ -4,7 +4,7 @@
  */
 export interface ElementCategory {
   /** The id of the element category */
-  id: string;
+  id: number;
 
   /** The name of the element category */
   name: string;

@@ -1,6 +1,6 @@
 {
   "name": "@brickninjaapi/types",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "TypeScript types for all datastructures used by the Brick Ninja API",
   "license": "MIT",
   "repository": {

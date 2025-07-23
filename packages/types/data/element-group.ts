@@ -4,7 +4,7 @@
  */
 export interface ElementGroup {
   /** The id of the element group */
-  id: string;
+  id: number;
 
   /** The name of the element group */
   name: string;

@@ -13,7 +13,7 @@ export interface Element {
   icon?: string;
 
   /** The type of the item  */
-  type: 'Element';
+  type: 'Default';
 
   /** Element details */
   details?: {
