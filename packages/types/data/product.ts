@@ -76,3 +76,23 @@ export interface ProductCategory {
   /** The name of the category */
   name: string;
 }
+
+export interface ProductInventoryList {
+  /** The ID of the product */
+  productId: number;
+
+  /** The items in the inventory */
+  items: {
+    /** The ID of the inventory item */
+    id: string;
+
+    /** The quantity of the inventory item */
+    quantity: number;
+  }[];
+
+  /** The total number of items in the inventory */
+  total_items: number;
+
+  /** The total quantity of the product in the inventory */
+  total_quantity: number;
+}
