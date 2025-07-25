@@ -1,5 +1,11 @@
 # @brickninjaapi/fetch
 
+## 0.0.14
+
+### Patch Changes
+
+- 4820475: Add endpoint to product inventory list
+
 ## 0.0.13
 
 ### Patch Changes
