@@ -84,7 +84,7 @@ export interface ProductInventoryList {
   /** The items in the inventory */
   items: {
     /** The ID of the inventory item */
-    id: string;
+    item_id: string;
 
     /** The quantity of the inventory item */
     quantity: number;
