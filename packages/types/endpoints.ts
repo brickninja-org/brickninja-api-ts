@@ -1,16 +1,21 @@
 import type { Color } from "./data/color";
 import type { Element } from './data/element';
 import type { ElementCategory } from "./data/element-category";
+import type { ElementDesign } from "./data/element-design";
 import type { ElementGroup } from "./data/element-group";
 import type { Item } from "./data/item";
 import type { Product, ProductCategory, ProductInventoryList } from "./data/product";
 import type { SchemaVersion } from "./schema";
+
+export type KnownAuthenticatedEndpoint =
+  | '/v1/account';
 
 export type KnownUnauthorizedEndpoint =
   | '/v1/build'
   | '/v1/colors'
   | '/v1/elements'
   | '/v1/elements/categories'
+  | '/v1/elements/designs'
   | '/v1/elements/groups'
   | '/v1/items'
   | '/v1/items/${string}/container-contents'
@@ -20,9 +25,10 @@ export type KnownUnauthorizedEndpoint =
 
 export type KnownBulkExpandedEndpoint =
   | '/v1/colors'
-  | '/v1/elements'
   | '/v1/elements/categories'
+  | '/v1/elements/designs'
   | '/v1/elements/groups'
+  | '/v1/elements'
   | '/v1/items'
   | '/v1/products/categories'
   | '/v1/products';
@@ -36,7 +42,7 @@ export type KnownLocalizedEndpoint =
   | '/v1/products/categories'
   | '/v1/products';
 
-export type KnownEndpoint = KnownUnauthorizedEndpoint | KnownBulkExpandedEndpoint | KnownLocalizedEndpoint;
+export type KnownEndpoint = KnownAuthenticatedEndpoint | KnownUnauthorizedEndpoint | KnownBulkExpandedEndpoint | KnownLocalizedEndpoint;
 
 // helper types for parameters
 type CombineParameters<P1 extends string, P2 extends string> = `${P1}&${P2}` | `${P2}&${P1}`;
@@ -45,7 +51,7 @@ type WithParameters<Url extends string, Parameters extends string | undefined = 
 
 // helper for paginated endpoints
 type PaginationParameters = `page=${number}` | `page_size=${number}` | CombineParameters<`page=${number}`, `page_size=${number}`>;
-type PaginatedEndpointUrl<Endpoint extends KnownEndpoint> = Endpoint | WithParameters<Endpoint, PaginationParameters>
+type PaginatedEndpointUrl<Endpoint extends KnownEndpoint> = Endpoint | WithParameters<Endpoint, PaginationParameters>;
 
 // helper types for bulk requests
 type BulkExpandedSingleEndpointUrl<Endpoint extends KnownBulkExpandedEndpoint, Id extends string | number> = `${Endpoint}/${Id}` | WithParameters<Endpoint, `id=${Id}`>
@@ -78,7 +84,11 @@ export type AuthenticatedOptions = {
 
 export type OptionsByEndpoint<Endpoint extends string> =
   Endpoint extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint & KnownUnauthorizedEndpoint & KnownLocalizedEndpoint, string | number> ? Options & LocalizedOptions :
+  Endpoint extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint & KnownAuthenticatedEndpoint & KnownLocalizedEndpoint, string | number> ? Options & AuthenticatedOptions & LocalizedOptions :
   Endpoint extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint & KnownLocalizedEndpoint, string | number> ? Options & LocalizedOptions :
+  Endpoint extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint & KnownAuthenticatedEndpoint, string | number> ? Options & AuthenticatedOptions :
+  Endpoint extends KnownAuthenticatedEndpoint & KnownLocalizedEndpoint ? Options & AuthenticatedOptions & LocalizedOptions :
+  Endpoint extends KnownAuthenticatedEndpoint ? Options & AuthenticatedOptions :
   Endpoint extends KnownLocalizedEndpoint ? Options & LocalizedOptions :
   Endpoint extends KnownEndpoint | BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint, string | number> ? Options :
   Partial<AuthenticatedOptions & LocalizedOptions>;
@@ -89,6 +99,7 @@ export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema exten
   Url extends `/v1/products/${string}/inventory-list` ? ProductInventoryList :
   Url extends BulkExpandedEndpointUrl<'/v1/colors', number> ? BulkExpandedResponseType<'/v1/colors', Url, number, Color> :
   Url extends BulkExpandedEndpointUrl<'/v1/elements/categories', number> ? BulkExpandedResponseType<'/v1/elements/categories', Url, number, ElementCategory> :
+  Url extends BulkExpandedEndpointUrl<'/v1/elements/designs', number> ? BulkExpandedResponseType<'/v1/elements/designs', Url, number, ElementDesign> :
   Url extends BulkExpandedEndpointUrl<'/v1/elements/groups', number> ? BulkExpandedResponseType<'/v1/elements/groups', Url, number, ElementGroup> :
   Url extends BulkExpandedEndpointUrl<'/v1/elements', number> ? BulkExpandedResponseType<'/v1/elements', Url, number, Element> :
   Url extends BulkExpandedEndpointUrl<'/v1/items', number> ? BulkExpandedResponseType<'/v1/items', Url, number, Item<Schema>> :
