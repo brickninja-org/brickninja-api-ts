@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 0.0.23
+
+### Patch Changes
+
+- New release
+
 ## 0.0.22
 
 ### Patch Changes

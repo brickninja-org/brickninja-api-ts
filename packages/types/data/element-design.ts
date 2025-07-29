@@ -17,4 +17,7 @@ export interface ElementDesign {
 
   /** The weight of the element */
   weight?: number;
+
+  /** The list of element item IDs */
+  element_items: number[];
 }
