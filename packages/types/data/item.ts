@@ -10,8 +10,7 @@ type ItemBase = {
   details?: {
     color_id?: number;
     design_id?: number;
-    instruction_item_ids?: number[];
-    category?: string;
+    category_id?: number;
     type?: 'Bag' | 'Default' | 'Instruction' | 'StickerSheet' | 'DUPLO' | 'LEGO' | 'TECHNIC';
   }
   flags?: string[];
