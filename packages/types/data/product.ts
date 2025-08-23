@@ -26,6 +26,9 @@ export interface Product {
   /** Product type */
   type?: 'Set' | 'Figure';
 
+  /** The rarity of the product */
+  rarity?: 'Exclusive' | 'Retail';
+
   /** Product details */
   details?: {
     /** The attributes of this product */
@@ -33,12 +36,6 @@ export interface Product {
 
     /** The subtype of this product */
     type?: string;
-
-    /** The barcodes of the product */
-    barcodes?: Barcode[];
-
-    /** The region information for the product */
-    region_info?: RegionInfo;
   }
 }
 
@@ -63,10 +60,12 @@ export type Barcode = {
 export type RegionInfo = Record<'CA' | 'DE' | 'GB' | 'US', {
   /** The recommended retail price */
   price: number;
-  /** The release date */
-  release: Date;
   /** The insider points for the product */
   points?: number;
+  /** The product release date */
+  release_date?: Date;
+  /** The product discontinuation date */
+  discontinuation_date?: Date;
 }>;
 
 export interface ProductCategory {

@@ -4,7 +4,7 @@ import type { ElementCategory } from "./data/element-category";
 import type { ElementDesign } from "./data/element-design";
 import type { ElementGroup } from "./data/element-group";
 import type { Item } from "./data/item";
-import type { Product, ProductCategory, ProductInventoryList } from "./data/product";
+import type { Product, ProductCategory, ProductInventoryList, RegionInfo } from "./data/product";
 import type { SchemaVersion } from "./schema";
 
 export type KnownAuthenticatedEndpoint =
@@ -20,6 +20,7 @@ export type KnownUnauthorizedEndpoint =
   | '/v1/items'
   | '/v1/items/${string}/container-contents'
   | '/v1/products/${string}/inventory-list'
+  | '/v1/products/${string}/region-info'
   | '/v1/products/categories'
   | '/v1/products';
 
@@ -97,6 +98,7 @@ export type OptionsByEndpoint<Endpoint extends string> =
 export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema extends SchemaVersion = undefined> =
   Url extends `/v1/items/${string}/container-contents` ? { id: number; item_id: number; quantity: number; }[] :
   Url extends `/v1/products/${string}/inventory-list` ? ProductInventoryList :
+  Url extends `/v1/products/${string}/region-info` ? RegionInfo :
   Url extends BulkExpandedEndpointUrl<'/v1/colors', number> ? BulkExpandedResponseType<'/v1/colors', Url, number, Color> :
   Url extends BulkExpandedEndpointUrl<'/v1/elements/categories', number> ? BulkExpandedResponseType<'/v1/elements/categories', Url, number, ElementCategory> :
   Url extends BulkExpandedEndpointUrl<'/v1/elements/designs', number> ? BulkExpandedResponseType<'/v1/elements/designs', Url, number, ElementDesign> :
