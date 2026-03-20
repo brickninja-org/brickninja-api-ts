@@ -27,6 +27,7 @@
     "@brickninjaapi/types": "~0.0.26"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   }
 }
