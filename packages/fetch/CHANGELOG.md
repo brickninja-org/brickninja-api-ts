@@ -1,5 +1,11 @@
 # @brickninjaapi/fetch
 
+## 0.0.23
+
+### Patch Changes
+
+- 06e285a: fix(gha): update publish config
+
 ## 0.0.22
 
 ### Patch Changes

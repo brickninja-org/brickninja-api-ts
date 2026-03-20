@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 0.0.31
+
+### Patch Changes
+
+- 06e285a: fix(gha): update publish config
+
 ## 0.0.30
 
 ### Patch Changes
