@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/brickninja-org/brickninjaapi-ts.git",
+    "url": "git+https://github.com/brickninja-org/brickninja-api-ts.git",
     "directory": "packages/types"
   },
   "exports": {
