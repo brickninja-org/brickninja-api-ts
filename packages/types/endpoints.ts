@@ -75,7 +75,7 @@ type BulkExpandedResponseType<Endpoint extends KnownBulkExpandedEndpoint, Url ex
 type Options = {};
 
 export type LocalizedOptions = {
-  language?: 'de' | 'en' | 'es' | 'fr' | 'nl';
+  language?: 'de' | 'en' | 'nl';
 };
 
 export type AuthenticatedOptions = {
