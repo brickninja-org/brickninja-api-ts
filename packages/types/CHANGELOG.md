@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 0.0.29
+
+### Patch Changes
+
+- 17aaef6: chore(types): update languages
+
 ## 0.0.28
 
 ### Patch Changes
