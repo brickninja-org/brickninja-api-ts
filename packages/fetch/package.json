@@ -21,10 +21,10 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "typescript": "5.8.3"
+    "typescript": "5.9.3"
   },
   "peerDependencies": {
-    "@brickninjaapi/types": "~0.0.26"
+    "@brickninjaapi/types": "~0.0.27"
   },
   "publishConfig": {
     "access": "public"

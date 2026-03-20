@@ -35,7 +35,6 @@ export type KnownBulkExpandedEndpoint =
   | '/v1/products';
 
 export type KnownLocalizedEndpoint =
-  | '/v1/colors'
   | '/v1/elements'
   | '/v1/elements/categories'
   | '/v1/elements/groups'
@@ -52,7 +51,7 @@ type WithParameters<Url extends string, Parameters extends string | undefined = 
 
 // helper for paginated endpoints
 type PaginationParameters = `page=${number}` | `page_size=${number}` | CombineParameters<`page=${number}`, `page_size=${number}`>;
-type PaginatedEndpointUrl<Endpoint extends KnownEndpoint> = Endpoint | WithParameters<Endpoint, PaginationParameters>;
+// type PaginatedEndpointUrl<Endpoint extends KnownEndpoint> = Endpoint | WithParameters<Endpoint, PaginationParameters>;
 
 // helper types for bulk requests
 type BulkExpandedSingleEndpointUrl<Endpoint extends KnownBulkExpandedEndpoint, Id extends string | number> = `${Endpoint}/${Id}` | WithParameters<Endpoint, `id=${Id}`>
