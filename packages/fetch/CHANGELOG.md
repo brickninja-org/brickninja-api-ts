@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- Migrate to pnpm
+
+## 0.0.20
+
+### Patch Changes
+
 - Update versions
 
 ## 0.0.19
