@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 0.0.32
+
+### Patch Changes
+
+- 515105d: fix(types): remove some languages
+
 ## 0.0.31
 
 ### Patch Changes
