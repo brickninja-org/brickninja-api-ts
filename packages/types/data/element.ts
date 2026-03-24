@@ -30,3 +30,29 @@ export interface Element {
     category?: string;
   };
 };
+
+/**
+ * DesignCategory as returned from `/v2/elements/designs/categories`
+ */
+export interface DesignCategory {
+  /** The ID of the element design category */
+  id: number;
+
+  /** The name of the element design category */
+  name: string;
+
+  /** List if design IDs that are part of this element design category */
+  designs: number[];
+}
+
+/** DesignGroup as returned from `/v2/elements/designs/groups */
+export interface DesignGroup {
+  /** The ID of the design group */
+  id: number;
+
+  /** The name of the design group */
+  name: string;
+
+  /** Design category IDs that are part of this group */
+  categories: number[];
+}

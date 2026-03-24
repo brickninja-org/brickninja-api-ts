@@ -1,5 +1,5 @@
 import type { Color } from "./data/color";
-import type { Element } from './data/element';
+import type { DesignCategory, DesignGroup, Element } from './data/element';
 import type { ElementCategory } from "./data/element-category";
 import type { ElementDesign } from "./data/element-design";
 import type { ElementGroup } from "./data/element-group";
@@ -11,6 +11,8 @@ export type KnownAuthenticatedEndpoint =
   | '/v1/account';
 
 export type KnownUnauthorizedEndpoint =
+  | '/v2/elements/designs/categories'
+  | '/v2/elements/designs/groups'
   | '/v1/build'
   | '/v1/colors'
   | '/v1/elements'
@@ -25,6 +27,8 @@ export type KnownUnauthorizedEndpoint =
   | '/v1/products';
 
 export type KnownBulkExpandedEndpoint =
+  | '/v2/elements/designs/categories'
+  | '/v2/elements/designs/groups'
   | '/v1/colors'
   | '/v1/elements/categories'
   | '/v1/elements/designs'
@@ -98,6 +102,8 @@ export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema exten
   Url extends `/v1/items/${string}/container-contents` ? { id: number; item_id: number; quantity: number; }[] :
   Url extends `/v1/products/${string}/inventory-list` ? ProductInventoryList :
   Url extends `/v1/products/${string}/region-info` ? RegionInfo :
+  Url extends BulkExpandedEndpointUrl<'/v2/elements/designs/categories', number> ? BulkExpandedResponseType<'/v2/elements/designs/categories', Url, number, DesignCategory> : 
+  Url extends BulkExpandedEndpointUrl<'/v2/elements/designs/groups', number> ? BulkExpandedResponseType<'/v2/elements/designs/groups', Url, number, DesignGroup> : 
   Url extends BulkExpandedEndpointUrl<'/v1/colors', number> ? BulkExpandedResponseType<'/v1/colors', Url, number, Color> :
   Url extends BulkExpandedEndpointUrl<'/v1/elements/categories', number> ? BulkExpandedResponseType<'/v1/elements/categories', Url, number, ElementCategory> :
   Url extends BulkExpandedEndpointUrl<'/v1/elements/designs', number> ? BulkExpandedResponseType<'/v1/elements/designs', Url, number, ElementDesign> :
