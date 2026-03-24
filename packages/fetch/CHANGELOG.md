@@ -1,5 +1,11 @@
 # @brickninjaapi/fetch
 
+## 0.0.25
+
+### Patch Changes
+
+- bbfc6ca: chore(types): improve element design
+
 ## 0.0.24
 
 ### Patch Changes
