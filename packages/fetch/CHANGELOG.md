@@ -1,5 +1,11 @@
 # @brickninjaapi/fetch
 
+## 0.0.26
+
+### Patch Changes
+
+- 231b0fc: fix(fetch): update API URL
+
 ## 0.0.25
 
 ### Patch Changes
