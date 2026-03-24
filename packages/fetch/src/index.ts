@@ -14,7 +14,7 @@ export async function fetchBrickNinjaApi<
 >(
   ...[endpoint, options]: Args<Url, Schema>
 ): Promise<EndpointType<Url, Schema>> {
-  const url = new URL(endpoint, 'https://brick-ninja-api.vercel.app/');
+  const url = new URL(endpoint, 'https://api.brick.ninja/');
 
   if (options.schema) {
     url.searchParams.set('v', options.schema);
