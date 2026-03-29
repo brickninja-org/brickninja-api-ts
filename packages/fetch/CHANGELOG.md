@@ -1,5 +1,11 @@
 # @brickninjaapi/fetch
 
+## 0.0.27
+
+### Patch Changes
+
+- caf28ac: Update endpoints
+
 ## 0.0.26
 
 ### Patch Changes
