@@ -13,5 +13,5 @@ export interface ElementGroup {
   description?: string;
 
   /** Element category ids that are part of this group */
-  categories: number[]
+  category_ids: number[]
 }

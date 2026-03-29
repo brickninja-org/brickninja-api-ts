@@ -10,14 +10,14 @@ export interface ElementDesign {
   name: string;
 
   /** The category id of the element */
-  category_id: number;
+  // category_id: number;
 
   /** The type of the element */
-  type: 'DUPLO' | 'LEGO' | 'TECHNIC';
+  piece_type: 'DUPLO' | 'LEGO' | 'TECHNIC';
 
   /** The weight of the element */
-  weight?: number;
+  weight: number;
 
   /** The list of element item IDs */
-  element_items: number[];
+  element_ids: number[];
 }

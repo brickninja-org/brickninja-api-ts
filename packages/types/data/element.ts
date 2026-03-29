@@ -32,6 +32,29 @@ export interface Element {
 };
 
 /**
+ * ElementColor as returned from `/v2/elements/colors?ids=...` endpoint
+ */
+export type ElementColor = {
+  /** The color ID */
+  id: number;
+
+  /** The name of the color */
+  name: string;
+
+  /** The piece HEX color */
+  piece_color: string;
+
+  /** The contrast of the HEX color */
+  contrast_color: string;
+
+  /** The family of the color */
+  color_family: 'Black' | 'Blue' | 'Brown' | 'Green' | 'Grey' | 'Lilac' | 'Metallic' | 'Multicombination' | 'Orange' | 'Purple' | 'Red' | 'White' | 'Yellow';
+
+  /** List of element IDs that are part of this element color */
+  element_ids: string[],
+}
+
+/**
  * DesignCategory as returned from `/v2/elements/designs/categories`
  */
 export interface DesignCategory {
@@ -41,8 +64,8 @@ export interface DesignCategory {
   /** The name of the element design category */
   name: string;
 
-  /** List if design IDs that are part of this element design category */
-  designs: number[];
+  /** List of design IDs that are part of this element design category */
+  designs_ids: number[];
 }
 
 /** DesignGroup as returned from `/v2/elements/designs/groups */
@@ -53,6 +76,6 @@ export interface DesignGroup {
   /** The name of the design group */
   name: string;
 
-  /** Design category IDs that are part of this group */
-  categories: number[];
+  /** List of category IDs that are part of this group */
+  category_ids: number[];
 }
