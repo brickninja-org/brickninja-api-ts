@@ -1,10 +1,4 @@
-import type { Color } from "./data/color";
-import type { DesignCategory, DesignGroup, Element, ElementColor } from './data/element';
-import type { ElementCategory } from "./data/element-category";
-import type { ElementDesign } from "./data/element-design";
-import type { ElementGroup } from "./data/element-group";
-import type { Item } from "./data/item";
-import type { Product, ProductCategory, ProductInventoryList, RegionInfo } from "./data/product";
+import type { ElementCategory, ElementGroup, ElementColor, ElementDesign } from './data/element';
 import type { SchemaVersion } from "./schema";
 
 export type KnownAuthenticatedEndpoint =
@@ -12,41 +6,18 @@ export type KnownAuthenticatedEndpoint =
 
 export type KnownUnauthorizedEndpoint =
   | '/v2/elements/colors'
-  | '/v2/elements/designs/categories'
-  | '/v2/elements/designs/groups'
-  | '/v1/build'
-  | '/v1/colors'
-  | '/v1/elements'
-  | '/v1/elements/categories'
-  | '/v1/elements/designs'
-  | '/v1/elements/groups'
-  | '/v1/items'
-  | '/v1/items/${string}/container-contents'
-  | '/v1/products/${string}/inventory-list'
-  | '/v1/products/${string}/region-info'
-  | '/v1/products/categories'
-  | '/v1/products';
+  | '/v2/elements/categories'
+  | '/v2/selements/designs'
+  | '/v2/elements/groups';
 
 export type KnownBulkExpandedEndpoint =
   | '/v2/elements/colors'
-  | '/v2/elements/designs/categories'
-  | '/v2/elements/designs/groups'
-  | '/v1/colors'
-  | '/v1/elements/categories'
-  | '/v1/elements/designs'
-  | '/v1/elements/groups'
-  | '/v1/elements'
-  | '/v1/items'
-  | '/v1/products/categories'
-  | '/v1/products';
+  | '/v2/elements/categories'
+  | '/v2/elements/designs'
+  | '/v2/elements/groups';
 
 export type KnownLocalizedEndpoint =
-  | '/v1/elements'
-  | '/v1/elements/categories'
-  | '/v1/elements/groups'
-  | '/v1/items'
-  | '/v1/products/categories'
-  | '/v1/products';
+  | '/v2/items';
 
 export type KnownEndpoint = KnownAuthenticatedEndpoint | KnownUnauthorizedEndpoint | KnownBulkExpandedEndpoint | KnownLocalizedEndpoint;
 
@@ -56,8 +27,8 @@ type WithParameters<Url extends string, Parameters extends string | undefined = 
   Parameters extends undefined ? Url : `${Url}?${Parameters}`;
 
 // helper for paginated endpoints
-type PaginationParameters = `page=${number}` | `page_size=${number}` | CombineParameters<`page=${number}`, `page_size=${number}`>;
-// type PaginatedEndpointUrl<Endpoint extends KnownEndpoint> = Endpoint | WithParameters<Endpoint, PaginationParameters>;
+type PaginationParameters = `page=${number}` | `page_size=${number}` | CombineParameters<`page=${number}`, `page_size=${number}`> | CombineParameters<`page=${number}`, `page_size=${number}`>;
+type PaginatedEndpointUrl<Endpoint extends KnownEndpoint> = Endpoint | WithParameters<Endpoint, PaginationParameters>;
 
 // helper types for bulk requests
 type BulkExpandedSingleEndpointUrl<Endpoint extends KnownBulkExpandedEndpoint, Id extends string | number> = `${Endpoint}/${Id}` | WithParameters<Endpoint, `id=${Id}`>
@@ -101,20 +72,10 @@ export type OptionsByEndpoint<Endpoint extends string> =
 
 // result type for endpoint
 export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema extends SchemaVersion = undefined> =
-  Url extends `/v1/items/${string}/container-contents` ? { id: number; item_id: number; quantity: number; }[] :
-  Url extends `/v1/products/${string}/inventory-list` ? ProductInventoryList :
-  Url extends `/v1/products/${string}/region-info` ? RegionInfo :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/colors', number> ? BulkExpandedResponseType<'/v2/elements/colors', Url, number, ElementColor> :
-  Url extends BulkExpandedEndpointUrl<'/v2/elements/designs/categories', number> ? BulkExpandedResponseType<'/v2/elements/designs/categories', Url, number, DesignCategory> : 
-  Url extends BulkExpandedEndpointUrl<'/v2/elements/designs/groups', number> ? BulkExpandedResponseType<'/v2/elements/designs/groups', Url, number, DesignGroup> : 
-  Url extends BulkExpandedEndpointUrl<'/v1/colors', number> ? BulkExpandedResponseType<'/v1/colors', Url, number, Color> :
-  Url extends BulkExpandedEndpointUrl<'/v1/elements/categories', number> ? BulkExpandedResponseType<'/v1/elements/categories', Url, number, ElementCategory> :
-  Url extends BulkExpandedEndpointUrl<'/v1/elements/designs', number> ? BulkExpandedResponseType<'/v1/elements/designs', Url, number, ElementDesign> :
-  Url extends BulkExpandedEndpointUrl<'/v1/elements/groups', number> ? BulkExpandedResponseType<'/v1/elements/groups', Url, number, ElementGroup> :
-  Url extends BulkExpandedEndpointUrl<'/v1/elements', number> ? BulkExpandedResponseType<'/v1/elements', Url, number, Element> :
-  Url extends BulkExpandedEndpointUrl<'/v1/items', number> ? BulkExpandedResponseType<'/v1/items', Url, number, Item<Schema>> :
-  Url extends BulkExpandedEndpointUrl<'/v1/products/categories', number> ? BulkExpandedResponseType<'/v1/products/categories', Url, number, ProductCategory> :
-  Url extends BulkExpandedEndpointUrl<'/v1/products', number> ? BulkExpandedResponseType<'/v1/products', Url, number, Product> :
+  Url extends BulkExpandedEndpointUrl<'/v2/elements/categories', number> ? BulkExpandedResponseType<'/v2/elements/categories', Url, number, ElementCategory> :
+  Url extends BulkExpandedEndpointUrl<'/v2/elements/designs', number> ? BulkExpandedResponseType<'/v2/elements/designs', Url, number, ElementDesign> :
+  Url extends BulkExpandedEndpointUrl<'/v2/elements/groups', number> ? BulkExpandedResponseType<'/v2/elements/groups', Url, number, ElementGroup> :
   // fallback for all bulk expanded urls
   Url extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint, string | number> ? BulkExpandedResponseType<KnownBulkExpandedEndpoint, Url, string | number, unknown> :
   // fallback for all other urls

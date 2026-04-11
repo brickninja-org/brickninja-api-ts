@@ -55,9 +55,9 @@ export type ElementColor = {
 }
 
 /**
- * DesignCategory as returned from `/v2/elements/designs/categories`
+ * ElementCategory as returned from `/v2/elements/categories`
  */
-export interface DesignCategory {
+export interface ElementCategory {
   /** The ID of the element design category */
   id: number;
 
@@ -68,14 +68,37 @@ export interface DesignCategory {
   designs_ids: number[];
 }
 
-/** DesignGroup as returned from `/v2/elements/designs/groups */
-export interface DesignGroup {
-  /** The ID of the design group */
+/**
+ * ElementGroup as returned from `/v2/elements/groups
+ */
+export interface ElementGroup {
+  /** The ID of the element group */
   id: number;
 
-  /** The name of the design group */
+  /** The name of the element group */
   name: string;
 
   /** List of category IDs that are part of this group */
   category_ids: number[];
 }
+
+/**
+ * ElementDesign as returned from `/v2/elements/designs
+ */
+export interface ElementDesign {
+  /** The ID of the design */
+  id: number;
+
+  /** The name of the design */
+  name: string;
+
+  /** The piece type of the design */
+  piece_type: 'DUPLO' | 'LEGO' | 'TECHNIC';
+
+  /** The weight in grams of the design  */
+  weight: number;
+
+  /** List of element IDs that are part of this design */
+  element_ids: string[];
+}
+
