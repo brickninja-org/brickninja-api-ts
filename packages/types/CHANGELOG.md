@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 0.1.0
+
+### Minor Changes
+
+- 92b4e17: Change API version to v2
+
 ## 0.0.34
 
 ### Patch Changes

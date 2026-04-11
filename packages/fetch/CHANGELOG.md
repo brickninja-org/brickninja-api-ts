@@ -1,5 +1,16 @@
 # @brickninjaapi/fetch
 
+## 1.0.0
+
+### Minor Changes
+
+- 92b4e17: Change API version to v2
+
+### Patch Changes
+
+- Updated dependencies [92b4e17]
+  - @brickninjaapi/types@0.1.0
+
 ## 0.0.27
 
 ### Patch Changes
