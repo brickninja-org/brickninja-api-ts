@@ -1,5 +1,14 @@
 # @brickninjaapi/fetch
 
+## 0.0.28
+
+### Patch Changes
+
+- 44cce1f: Update dependecies
+- da23814: Update deps
+- Updated dependencies [44cce1f]
+  - @brickninjaapi/types@0.1.1
+
 ## 1.0.0
 
 ### Minor Changes
