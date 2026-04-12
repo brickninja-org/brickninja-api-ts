@@ -1,5 +1,13 @@
 # @brickninjaapi/fetch
 
+## 0.0.29
+
+### Patch Changes
+
+- Create new release ([`e3bbddd`](https://github.com/brickninja-org/brickninja-api-ts/commit/e3bbdddfdadae0bb59fcff3b6b0b576f27cb43b5) by [@brickninja-pro](https://github.com/brickninja-pro))
+- Updated internal dependencies:
+  - @brickninjaapi/types@0.1.2
+
 ## 0.0.28
 
 ### Patch Changes
