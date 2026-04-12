@@ -1,4 +1,5 @@
 import type { ElementCategory, ElementGroup, ElementColor, ElementDesign } from './data/element';
+import type { Item } from './data/item';
 import type { SchemaVersion } from "./schema";
 
 export type KnownAuthenticatedEndpoint =
@@ -8,13 +9,15 @@ export type KnownUnauthorizedEndpoint =
   | '/v2/elements/colors'
   | '/v2/elements/categories'
   | '/v2/selements/designs'
-  | '/v2/elements/groups';
+  | '/v2/elements/groups'
+  | '/v2/items';
 
 export type KnownBulkExpandedEndpoint =
   | '/v2/elements/colors'
   | '/v2/elements/categories'
   | '/v2/elements/designs'
-  | '/v2/elements/groups';
+  | '/v2/elements/groups'
+  | '/v2/items';
 
 export type KnownLocalizedEndpoint =
   | '/v2/items';
@@ -76,6 +79,7 @@ export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema exten
   Url extends BulkExpandedEndpointUrl<'/v2/elements/categories', number> ? BulkExpandedResponseType<'/v2/elements/categories', Url, number, ElementCategory> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/designs', number> ? BulkExpandedResponseType<'/v2/elements/designs', Url, number, ElementDesign> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/groups', number> ? BulkExpandedResponseType<'/v2/elements/groups', Url, number, ElementGroup> :
+  Url extends BulkExpandedEndpointUrl<'/v2/items', string> ? BulkExpandedResponseType<'/v2/items', Url, string, Item> :
   // fallback for all bulk expanded urls
   Url extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint, string | number> ? BulkExpandedResponseType<KnownBulkExpandedEndpoint, Url, string | number, unknown> :
   // fallback for all other urls
