@@ -19,8 +19,8 @@ importers:
   packages/fetch:
     dependencies:
       '@brickninjaapi/types':
-        specifier: ~0.0.26
-        version: 0.0.26
+        specifier: ~0.0.34
+        version: 0.0.34
     devDependencies:
       typescript:
         specifier: 5.9.3
@@ -38,8 +38,8 @@ packages:
     resolution: {integrity: sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g==}
     engines: {node: '>=6.9.0'}
 
-  '@brickninjaapi/types@0.0.26':
-    resolution: {integrity: sha512-EA0VHpB5KOBOTcTxaBDj/IuKjCiPxHI0NfeiMWPY6vLQ61chHccxtLPjPhp+QIzoeQn2mJnDVvaRgeBPE2yrlg==}
+  '@brickninjaapi/types@0.0.34':
+    resolution: {integrity: sha512-5N///joWAoc3DhvNk+d4trRH/Irlxw5Ft2EXtaXmcuE/EdhoyzeTdVF/L+iZMEgt5RnaJXYMKDgXBBpHO7PlFw==}
 
   '@changeset-bot/changelog@0.0.4':
     resolution: {integrity: sha512-4uTMATpxkxYEav2CTB+PwEgUqADUOSRd3H79EiEywmE+lgEcbOXRhp8rExlZcsxbpzGEmK21N2K0vEGqb20yIw==}
@@ -444,7 +444,7 @@ snapshots:
 
   '@babel/runtime@7.29.2': {}
 
-  '@brickninjaapi/types@0.0.26': {}
+  '@brickninjaapi/types@0.0.34': {}
 
   '@changeset-bot/changelog@0.0.4':
     dependencies:
