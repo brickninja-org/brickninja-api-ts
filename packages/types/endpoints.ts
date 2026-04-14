@@ -1,26 +1,30 @@
-import type { ElementCategory, ElementGroup, ElementColor, ElementDesign } from './data/element';
-import type { Item } from './data/item';
+import type { Createsubtoken } from './data/createsubtoken';
+import type { ElementCategory, ElementGroup, ElementDesign, Color } from './data/element';
+import type { Theme } from './data/set';
+import type { Tokeninfo } from './data/tokeninfo';
 import type { SchemaVersion } from "./schema";
 
 export type KnownAuthenticatedEndpoint =
-  | '/v1/account';
+  | '/v2/account'
+  | '/v2/createsubtoken';
 
 export type KnownUnauthorizedEndpoint =
+  | '/v2/build'
   | '/v2/elements/colors'
   | '/v2/elements/categories'
-  | '/v2/selements/designs'
+  | '/v2/elements/designs'
   | '/v2/elements/groups'
-  | '/v2/items';
+  | '/v2/sets/themes';
 
 export type KnownBulkExpandedEndpoint =
   | '/v2/elements/colors'
   | '/v2/elements/categories'
   | '/v2/elements/designs'
   | '/v2/elements/groups'
-  | '/v2/items';
+  | '/v2/sets/themes';
 
 export type KnownLocalizedEndpoint =
-  | '/v2/items';
+  | '/v2/sets/themes';
 
 export type KnownEndpoint = KnownAuthenticatedEndpoint | KnownUnauthorizedEndpoint | KnownBulkExpandedEndpoint | KnownLocalizedEndpoint;
 
@@ -30,7 +34,7 @@ type WithParameters<Url extends string, Parameters extends string | undefined = 
   Parameters extends undefined ? Url : `${Url}?${Parameters}`;
 
 // helper for paginated endpoints
-type PaginationParameters = `page=${number}` | `page_size=${number}` | CombineParameters<`page=${number}`, `page_size=${number}`> | CombineParameters<`page=${number}`, `page_size=${number}`>;
+type PaginationParameters = `page=${number}` | `page_size=${number}` | CombineParameters<`page=${number}`, `page_size=${number}`>;
 type PaginatedEndpointUrl<Endpoint extends KnownEndpoint> = Endpoint | WithParameters<Endpoint, PaginationParameters>;
 
 // helper types for bulk requests
@@ -51,7 +55,18 @@ type BulkExpandedResponseType<Endpoint extends KnownBulkExpandedEndpoint, Url ex
   // otherwise this is not a known bulk request
   unknown;
 
-// options
+// /v2/createsubtoken request
+type CreateSubtokenUrl<Url extends KnownEndpoint> =
+  | WithParameters<Url, CombineParameters<`expire=${string}`, CombineParameters<`permissions=${string}`, `urls=${string}`>>>
+  | WithParameters<Url, CombineParameters<`expire=${string}`, `permissions=${string}`>>
+  | WithParameters<Url, CombineParameters<`expire=${string}`, `urls=${string}`>>
+  | WithParameters<Url, CombineParameters<`permissions=${string}`, `urls=${string}`>>
+  | WithParameters<Url, `expire=${string}`>
+  | WithParameters<Url, `permissions=${string}`>
+  | WithParameters<Url, `urls=${string}`>
+  | Url;
+
+  // options
 type Options = {};
 
 export type LocalizedOptions = {
@@ -70,16 +85,20 @@ export type OptionsByEndpoint<Endpoint extends string> =
   Endpoint extends KnownAuthenticatedEndpoint & KnownLocalizedEndpoint ? Options & AuthenticatedOptions & LocalizedOptions :
   Endpoint extends KnownAuthenticatedEndpoint ? Options & AuthenticatedOptions :
   Endpoint extends KnownLocalizedEndpoint ? Options & LocalizedOptions :
+  Endpoint extends CreateSubtokenUrl<'/v2/createsubtoken'> ? Options & AuthenticatedOptions :
   Endpoint extends KnownEndpoint | BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint, string | number> ? Options :
   Partial<AuthenticatedOptions & LocalizedOptions>;
 
 // result type for endpoint
 export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema extends SchemaVersion = undefined> =
-  Url extends BulkExpandedEndpointUrl<'/v2/elements/colors', number> ? BulkExpandedResponseType<'/v2/elements/colors', Url, number, ElementColor> :
+  Url extends '/v2/account' ? { id: number } :
+  Url extends CreateSubtokenUrl<'/v2/createsubtoken'> ? Createsubtoken :
+  Url extends BulkExpandedEndpointUrl<'/v2/elements/colors', number> ? BulkExpandedResponseType<'/v2/elements/colors', Url, number, Color<Schema>> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/categories', number> ? BulkExpandedResponseType<'/v2/elements/categories', Url, number, ElementCategory> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/designs', number> ? BulkExpandedResponseType<'/v2/elements/designs', Url, number, ElementDesign> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/groups', number> ? BulkExpandedResponseType<'/v2/elements/groups', Url, number, ElementGroup> :
-  Url extends BulkExpandedEndpointUrl<'/v2/items', string> ? BulkExpandedResponseType<'/v2/items', Url, string, Item> :
+  Url extends BulkExpandedEndpointUrl<'/v2/sets/themes', number> ? BulkExpandedResponseType<'/v2/sets/themes', Url, number, Theme> :
+  Url extends '/v2/tokeninfo' ? Tokeninfo<Schema> :
   // fallback for all bulk expanded urls
   Url extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint, string | number> ? BulkExpandedResponseType<KnownBulkExpandedEndpoint, Url, string | number, unknown> :
   // fallback for all other urls

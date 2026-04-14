@@ -15,6 +15,9 @@ importers:
       '@changeset-bot/changelog':
         specifier: 0.0.4
         version: 0.0.4
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
 
   packages/fetch:
     dependencies:

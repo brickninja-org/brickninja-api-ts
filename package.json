@@ -5,16 +5,17 @@
     "test": "pnpm run -r test",
     "release": "pnpm run -r build && changeset publish"
   },
-  "dependencies": {
-    "@changesets/cli": "2.30.0"
-  },
-  "devDependencies": {
-    "@changeset-bot/changelog": "0.0.4"
-  },
   "engines": {
     "npm": "please-use-pnpm",
     "yarn": "please-use-pnpm",
     "pnpm": "10.33.0"
+  },
+  "dependencies": {
+    "@changesets/cli": "2.30.0"
+  },
+  "devDependencies": {
+    "@changeset-bot/changelog": "0.0.4",
+    "typescript": "5.9.3"
   },
   "packageManager": "pnpm@10.33.0"
 }

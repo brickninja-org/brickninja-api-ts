@@ -16,19 +16,19 @@ export async function fetchBrickNinjaApi<
 ): Promise<EndpointType<Url, Schema>> {
   const url = new URL(endpoint, 'https://api.brick.ninja/');
 
-  if (options.schema) {
+  if(options.schema) {
     url.searchParams.set('v', options.schema);
   }
-  if (hasLanguage(options)) {
+  if(hasLanguage(options)) {
     url.searchParams.set('lang', options.language);
   }
-  if (hasAccessToken(options)) {
+  if(hasAccessToken(options)) {
     url.searchParams.set('access_token', options.accessToken);
   }
 
   // build request
   let request = new Request(url, {
-    // The Brick Ninja API never uses redirects, so we want to error if we encounter one.
+    // The brick.ninja API never uses redirects, so we want to error if we encounter one.
     // We use `manual` instead of `error` here so we can throw our own `BrickNinjaApiError` with the response attached
     redirect: 'manual',
 
@@ -61,31 +61,31 @@ export async function fetchBrickNinjaApi<
     : url.toString();
 
   // check if the response is an error
-  if (!response.ok) {
+  if(!response.ok) {
     // if the response is JSON, it might have more details in the `text` prop
-    if (isJson) {
+    if(isJson) {
       const error: unknown = await response.json();
 
-      if (typeof error === 'object' && 'text' in error && typeof error.text === 'string') {
-        throw new BrickNinjaApiError(`The Brick Ninja API call to '${erroredUrl}' returned ${response.status} ${response.statusText}: ${error.text}.`, response);
+      if(typeof error === 'object' && 'text' in error && typeof error.text === 'string') {
+        throw new BrickNinjaApiError(`The brick.ninja API call to '${erroredUrl}' returned ${response.status} ${response.statusText}: ${error.text}.`, response);
       }
     }
 
     // otherwise just throw error with the status code
-    throw new BrickNinjaApiError(`The Brick Ninja API call to '${erroredUrl}' returned ${response.status} ${response.statusText}.`, response);
+    throw new BrickNinjaApiError(`The brick.ninja API call to '${erroredUrl}' returned ${response.status} ${response.statusText}.`, response);
   }
 
   // if the response is not JSON, throw an error
-  if (!isJson) {
-    throw new BrickNinjaApiError(`The Brick Ninja API call to '${erroredUrl}' did not respond with a JSON response`, response);
+  if(!isJson) {
+    throw new BrickNinjaApiError(`The brick.ninja API call to '${erroredUrl}' did not respond with a JSON response`, response);
   }
 
   // parse json
   const json = await response.json();
 
   // check that json is not `["v1", "v2"]` which sometimes happens for authenticated endpoints
-  if(url.toString() !== 'https://brick-ninja-api.vercel.app/' && Array.isArray(json) && json.length === 2 && json[0] === 'v1' && json[1] === 'v2') {
-    throw new BrickNinjaApiError(`The Brick Ninja API call to '${erroredUrl}' did returned an invalid response (["v1", "v2"])`, response);
+  if(url.toString() !== 'https://api.brick.ninja/' && Array.isArray(json) && json.length === 2 && json[0] === 'v1' && json[1] === 'v2') {
+    throw new BrickNinjaApiError(`The brick.ninja API call to '${erroredUrl}' did returned an invalid response (["v1", "v2"])`, response);
   }
 
   // TODO: catch more errors
@@ -97,7 +97,7 @@ export type FetchBrickNinjaApiOptions<Schema extends SchemaVersion> = {
   /** The schema to use when making the API request */
   schema?: Schema;
 
-  /** onRequest handler allows to modify the request made to the Brick Ninja API. */
+  /** onRequest handler allows to modify the request made to the Guild Wars 2 API. */
   onRequest?: (request: Request) => Request | Promise<Request>;
 
   /**

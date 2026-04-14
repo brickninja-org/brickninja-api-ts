@@ -1,3 +1,5 @@
+import type { SchemaVersion } from "../schema";
+
 /**
  * Product as returned from `/v1/elements` endpoint.
  * @see TODO: Update this type when the API changes.
@@ -32,9 +34,13 @@ export interface Element {
 };
 
 /**
- * ElementColor as returned from `/v2/elements/colors?ids=...` endpoint
+ * Color as returned from `/v2/elements/colors?ids=...` endpoint
  */
-export type ElementColor = {
+export type Color<Schema extends SchemaVersion = undefined> =
+  Schema extends undefined ? BaseColor :
+  BaseColor;
+
+  export interface BaseColor {
   /** The color ID */
   id: number;
 
