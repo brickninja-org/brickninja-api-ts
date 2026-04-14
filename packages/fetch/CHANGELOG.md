@@ -1,5 +1,11 @@
 # @brickninjaapi/fetch
 
+## 0.0.31
+
+### Patch Changes
+
+- Bump versions ([`5e98ccc`](https://github.com/brickninja-org/brickninja-api-ts/commit/5e98ccce98580563e814cbedf2606763018c0628) by [@brickninja-pro](https://github.com/brickninja-pro))
+
 ## 0.0.30
 
 ### Patch Changes
