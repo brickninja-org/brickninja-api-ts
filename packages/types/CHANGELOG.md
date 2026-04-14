@@ -1,5 +1,12 @@
 # @brickninjaapi/types
 
+## 0.1.3
+
+### Patch Changes
+
+- Update dependencies ([`965352b`](https://github.com/brickninja-org/brickninja-api-ts/commit/965352be76586db8384ab530f9d52435720859b2) by [@brickninja-pro](https://github.com/brickninja-pro))
+- Update dependencies. ([`965352b`](https://github.com/brickninja-org/brickninja-api-ts/commit/965352be76586db8384ab530f9d52435720859b2) by [@brickninja-pro](https://github.com/brickninja-pro))
+
 ## 0.1.2
 
 ### Patch Changes
