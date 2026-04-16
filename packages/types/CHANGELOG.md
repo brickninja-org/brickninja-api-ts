@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 0.1.4
+
+### Patch Changes
+
+- Better categories and subcategories ([`24b10d2`](https://github.com/brickninja-org/brickninja-api-ts/commit/24b10d2f62a488dffdee50254c85e3c721d345b5) by [@brickninja-pro](https://github.com/brickninja-pro))
+
 ## 0.1.3
 
 ### Patch Changes
