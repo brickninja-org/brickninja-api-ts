@@ -1,5 +1,5 @@
 import type { Createsubtoken } from './data/createsubtoken';
-import type { ElementCategory, ElementGroup, ElementDesign, Color } from './data/element';
+import type { Color, ElementCategory, ElementDesign, ElementSubcategory } from './data/element';
 import type { Theme } from './data/set';
 import type { Tokeninfo } from './data/tokeninfo';
 import type { SchemaVersion } from "./schema";
@@ -13,14 +13,14 @@ export type KnownUnauthorizedEndpoint =
   | '/v2/elements/colors'
   | '/v2/elements/categories'
   | '/v2/elements/designs'
-  | '/v2/elements/groups'
+  | '/v2/elements/subcategories'
   | '/v2/sets/themes';
 
 export type KnownBulkExpandedEndpoint =
   | '/v2/elements/colors'
   | '/v2/elements/categories'
   | '/v2/elements/designs'
-  | '/v2/elements/groups'
+  | '/v2/elements/subcategories'
   | '/v2/sets/themes';
 
 export type KnownLocalizedEndpoint =
@@ -96,7 +96,7 @@ export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema exten
   Url extends BulkExpandedEndpointUrl<'/v2/elements/colors', number> ? BulkExpandedResponseType<'/v2/elements/colors', Url, number, Color<Schema>> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/categories', number> ? BulkExpandedResponseType<'/v2/elements/categories', Url, number, ElementCategory> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/designs', number> ? BulkExpandedResponseType<'/v2/elements/designs', Url, number, ElementDesign> :
-  Url extends BulkExpandedEndpointUrl<'/v2/elements/groups', number> ? BulkExpandedResponseType<'/v2/elements/groups', Url, number, ElementGroup> :
+  Url extends BulkExpandedEndpointUrl<'/v2/elements/subcategories', number> ? BulkExpandedResponseType<'/v2/elements/subcategories', Url, number, ElementSubcategory> :
   Url extends BulkExpandedEndpointUrl<'/v2/sets/themes', number> ? BulkExpandedResponseType<'/v2/sets/themes', Url, number, Theme> :
   Url extends '/v2/tokeninfo' ? Tokeninfo<Schema> :
   // fallback for all bulk expanded urls

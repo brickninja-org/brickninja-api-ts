@@ -61,31 +61,31 @@ export type Color<Schema extends SchemaVersion = undefined> =
 }
 
 /**
- * ElementCategory as returned from `/v2/elements/categories`
+ * ElementSubategory as returned from `/v2/elements/subcategories`
  */
-export interface ElementCategory {
-  /** The ID of the element design category */
+export interface ElementSubcategory {
+  /** The ID of the element subcategory */
   id: number;
 
-  /** The name of the element design category */
+  /** The name of the element subcategory */
   name: string;
 
-  /** List of design IDs that are part of this element design category */
+  /** List of design IDs that are part of this element subcategory */
   designs_ids: number[];
 }
 
 /**
- * ElementGroup as returned from `/v2/elements/groups
+ * ElementCategory as returned from `/v2/elements/categories
  */
-export interface ElementGroup {
-  /** The ID of the element group */
+export interface ElementCategory {
+  /** The ID of the element category */
   id: number;
 
-  /** The name of the element group */
+  /** The name of the element category */
   name: string;
 
-  /** List of category IDs that are part of this group */
-  category_ids: number[];
+  /** List of subcategory IDs that are part of this group */
+  subcategory_ids: number[];
 }
 
 /**
