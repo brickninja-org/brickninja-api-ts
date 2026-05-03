@@ -1,5 +1,13 @@
 # @brickninjaapi/types
 
+## 0.2.0
+
+### Minor Changes
+
+- Add typed support for `/v2/elements` with schema-aware `ElementV2`, and update schema version metadata. ([`e2822c2`](https://github.com/brickninja-org/brickninja-api-ts/commit/e2822c2c0f99013666826d284a890380a3ce0808) by [@brickninja-pro](https://github.com/brickninja-pro))
+
+  Harden fetch runtime safety by handling omitted options and missing content-type headers without crashing.
+
 ## 0.1.4
 
 ### Patch Changes
