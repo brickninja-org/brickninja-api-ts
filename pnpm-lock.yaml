@@ -22,7 +22,7 @@ importers:
   packages/fetch:
     dependencies:
       '@brickninjaapi/types':
-        specifier: ~0.2.0
+        specifier: ~0.3.0
         version: link:../types
     devDependencies:
       typescript:
