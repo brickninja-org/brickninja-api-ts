@@ -22,8 +22,8 @@ importers:
   packages/fetch:
     dependencies:
       '@brickninjaapi/types':
-        specifier: ~0.1.4
-        version: 0.1.4
+        specifier: ~0.2.0
+        version: link:../types
     devDependencies:
       typescript:
         specifier: 5.9.3
@@ -40,9 +40,6 @@ packages:
   '@babel/runtime@7.29.2':
     resolution: {integrity: sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g==}
     engines: {node: '>=6.9.0'}
-
-  '@brickninjaapi/types@0.1.4':
-    resolution: {integrity: sha512-yVM7popYc4MqsVwgm6cMeHy8aJ9XdtC9dmjYgZWUZPDCPuB5vzZAiG8VUa2oIgBzYSawceXki47os57F2zEGpA==}
 
   '@changeset-bot/changelog@0.0.4':
     resolution: {integrity: sha512-4uTMATpxkxYEav2CTB+PwEgUqADUOSRd3H79EiEywmE+lgEcbOXRhp8rExlZcsxbpzGEmK21N2K0vEGqb20yIw==}
@@ -446,8 +443,6 @@ packages:
 snapshots:
 
   '@babel/runtime@7.29.2': {}
-
-  '@brickninjaapi/types@0.1.4': {}
 
   '@changeset-bot/changelog@0.0.4':
     dependencies:
