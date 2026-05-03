@@ -14,16 +14,17 @@ export async function fetchBrickNinjaApi<
 >(
   ...[endpoint, options]: Args<Url, Schema>
 ): Promise<EndpointType<Url, Schema>> {
+  const resolvedOptions: FetchBrickNinjaApiOptions<Schema> & Partial<OptionsByEndpoint<Url> & FetchOptions> = options ?? {};
   const url = new URL(endpoint, 'https://api.brick.ninja/');
 
-  if(options.schema) {
-    url.searchParams.set('v', options.schema);
+  if(resolvedOptions.schema) {
+    url.searchParams.set('v', resolvedOptions.schema);
   }
-  if(hasLanguage(options)) {
-    url.searchParams.set('lang', options.language);
+  if(hasLanguage(resolvedOptions)) {
+    url.searchParams.set('lang', resolvedOptions.language);
   }
-  if(hasAccessToken(options)) {
-    url.searchParams.set('access_token', options.accessToken);
+  if(hasAccessToken(resolvedOptions)) {
+    url.searchParams.set('access_token', resolvedOptions.accessToken);
   }
 
   // build request
@@ -33,13 +34,13 @@ export async function fetchBrickNinjaApi<
     redirect: 'manual',
 
     // set signal and cache from options
-    signal: options.signal,
-    cache: options.cache
+    signal: resolvedOptions.signal,
+    cache: resolvedOptions.cache
   });
 
   // if there is a onRequest handler registered, let it modify the request
-  if(options.onRequest) {
-    request = await options.onRequest(request);
+  if(resolvedOptions.onRequest) {
+    request = await resolvedOptions.onRequest(request);
 
     if(!(request instanceof Request)) {
       throw new Error(`onRequest has to return a Request`);
@@ -50,14 +51,14 @@ export async function fetchBrickNinjaApi<
   const response = await fetch(request);
 
   // call onResponse handler
-  await options.onResponse?.(response);
+  await resolvedOptions.onResponse?.(response);
 
   // check if the response is json (`application/json; charset=utf-8`)
-  const isJson = response.headers.get('content-type').startsWith('application/json');
+  const isJson = response.headers.get('content-type')?.startsWith('application/json') ?? false;
 
   // censor access token in url to not leak it in error messages
-  const erroredUrl = hasAccessToken(options)
-    ? url.toString().replace(options.accessToken, '***')
+  const erroredUrl = hasAccessToken(resolvedOptions)
+    ? url.toString().replace(resolvedOptions.accessToken, '***')
     : url.toString();
 
   // check if the response is an error
@@ -122,10 +123,14 @@ export class BrickNinjaApiError extends Error {
   }
 }
 
-function hasLanguage(options: OptionsByEndpoint<any>): options is LocalizedOptions {
-  return 'language' in options;
+function hasLanguage(options: unknown): options is LocalizedOptions {
+  return typeof options === 'object' && options !== null
+    && 'language' in options
+    && typeof (options as { language?: unknown }).language === 'string';
 }
 
-function hasAccessToken(options: OptionsByEndpoint<any>): options is AuthenticatedOptions {
-  return 'accessToken' in options;
+function hasAccessToken(options: unknown): options is AuthenticatedOptions {
+  return typeof options === 'object' && options !== null
+    && 'accessToken' in options
+    && typeof (options as { accessToken?: unknown }).accessToken === 'string';
 }

@@ -3,7 +3,7 @@
  * @see TODO: Update this type when the API changes.
  */
 export interface Product {
-  /** The id of the poduct */
+  /** The id of the product */
   id: number;
 
   /** The name of the product */

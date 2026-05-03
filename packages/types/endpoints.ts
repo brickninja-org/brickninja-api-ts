@@ -1,5 +1,5 @@
 import type { Createsubtoken } from './data/createsubtoken';
-import type { Color, ElementCategory, ElementDesign, ElementSubcategory } from './data/element';
+import type { Color, ElementCategory, ElementDesign, ElementSubcategory, ElementV2 } from './data/element';
 import type { Theme } from './data/set';
 import type { Tokeninfo } from './data/tokeninfo';
 import type { SchemaVersion } from "./schema";
@@ -10,6 +10,7 @@ export type KnownAuthenticatedEndpoint =
 
 export type KnownUnauthorizedEndpoint =
   | '/v2/build'
+  | '/v2/elements'
   | '/v2/elements/colors'
   | '/v2/elements/categories'
   | '/v2/elements/designs'
@@ -17,6 +18,7 @@ export type KnownUnauthorizedEndpoint =
   | '/v2/sets/themes';
 
 export type KnownBulkExpandedEndpoint =
+  | '/v2/elements'
   | '/v2/elements/colors'
   | '/v2/elements/categories'
   | '/v2/elements/designs'
@@ -93,6 +95,7 @@ export type OptionsByEndpoint<Endpoint extends string> =
 export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema extends SchemaVersion = undefined> =
   Url extends '/v2/account' ? { id: number } :
   Url extends CreateSubtokenUrl<'/v2/createsubtoken'> ? Createsubtoken :
+  Url extends BulkExpandedEndpointUrl<'/v2/elements', number> ? BulkExpandedResponseType<'/v2/elements', Url, number, ElementV2<Schema>> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/colors', number> ? BulkExpandedResponseType<'/v2/elements/colors', Url, number, Color<Schema>> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/categories', number> ? BulkExpandedResponseType<'/v2/elements/categories', Url, number, ElementCategory> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/designs', number> ? BulkExpandedResponseType<'/v2/elements/designs', Url, number, ElementDesign> :

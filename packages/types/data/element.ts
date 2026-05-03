@@ -1,7 +1,7 @@
-import type { SchemaVersion } from "../schema";
+import type { SchemaAfter, SchemaVersion } from "../schema";
 
 /**
- * Product as returned from `/v1/elements` endpoint.
+ * Element as returned from `/v1/elements` endpoint.
  * @see TODO: Update this type when the API changes.
  */
 export interface Element {
@@ -34,6 +34,24 @@ export interface Element {
 };
 
 /**
+ * Element as returned from `/v2/elements` endpoint.
+ */
+export type ElementV2<Schema extends SchemaVersion = undefined> =
+  Schema extends undefined ? ElementV2<Exclude<SchemaVersion, undefined>> :
+  Schema extends SchemaAfter<'2026-05-03T00:00:00Z'> | 'latest' ? ElementV2_2026_05_03 :
+  ElementV2Base;
+
+interface ElementV2Base {
+  /** The id of the element */
+  id: number;
+
+  /** The name of the element */
+  name: string;
+}
+
+type ElementV2_2026_05_03 = ElementV2Base;
+
+/**
  * Color as returned from `/v2/elements/colors?ids=...` endpoint
  */
 export type Color<Schema extends SchemaVersion = undefined> =
@@ -61,7 +79,7 @@ export type Color<Schema extends SchemaVersion = undefined> =
 }
 
 /**
- * ElementSubategory as returned from `/v2/elements/subcategories`
+ * ElementSubcategory as returned from `/v2/elements/subcategories`
  */
 export interface ElementSubcategory {
   /** The ID of the element subcategory */
@@ -107,4 +125,3 @@ export interface ElementDesign {
   /** List of element IDs that are part of this design */
   element_ids: string[];
 }
-

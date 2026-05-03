@@ -2,7 +2,7 @@ import type { SchemaAfter, SchemaVersion } from "../schema";
 
 export type Tokeninfo<Schema extends SchemaVersion = undefined> =
   Schema extends undefined ? Tokeninfo<Exclude<SchemaVersion, undefined>> :
-  Schema extends SchemaAfter<'2026-04-09T10:12:00Z'> | 'latest' ? Tokeninfo_2019_05_22 :
+  Schema extends SchemaAfter<'2026-05-03T00:00:00Z'> | 'latest' ? Tokeninfo_2026_05_03 :
   TokeninfoBase;
 
 export type Permission = 'account' | 'builds';
@@ -18,7 +18,7 @@ interface TokeninfoBase {
   permissions: Permission[]
 }
 
-type Tokeninfo_2019_05_22 = TokeninfoBase & ({
+type Tokeninfo_2026_05_03 = TokeninfoBase & ({
   /** The type of the token */
   type: 'APIKey'
 } | {
