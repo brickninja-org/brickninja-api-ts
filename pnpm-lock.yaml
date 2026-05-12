@@ -16,30 +16,33 @@ importers:
         specifier: 0.0.4
         version: 0.0.4
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 6.0.3
+        version: 6.0.3
 
   packages/fetch:
     dependencies:
       '@brickninjaapi/types':
         specifier: ~0.3.0
-        version: link:../types
+        version: 0.3.0
     devDependencies:
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 6.0.3
+        version: 6.0.3
 
   packages/types:
     devDependencies:
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 6.0.3
+        version: 6.0.3
 
 packages:
 
   '@babel/runtime@7.29.2':
     resolution: {integrity: sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g==}
     engines: {node: '>=6.9.0'}
+
+  '@brickninjaapi/types@0.3.0':
+    resolution: {integrity: sha512-pO9+KRKfwhVhc/A49iYJgyH90FMB9yzJ6Dbyj9pPHtyG3Fs27NOO7aMaiHidswxK6O6bhxPvQ0/MkWh9KX1faA==}
 
   '@changeset-bot/changelog@0.0.4':
     resolution: {integrity: sha512-4uTMATpxkxYEav2CTB+PwEgUqADUOSRd3H79EiEywmE+lgEcbOXRhp8rExlZcsxbpzGEmK21N2K0vEGqb20yIw==}
@@ -420,8 +423,8 @@ packages:
   tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
 
-  typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+  typescript@6.0.3:
+    resolution: {integrity: sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -443,6 +446,8 @@ packages:
 snapshots:
 
   '@babel/runtime@7.29.2': {}
+
+  '@brickninjaapi/types@0.3.0': {}
 
   '@changeset-bot/changelog@0.0.4':
     dependencies:
@@ -874,7 +879,7 @@ snapshots:
 
   tr46@0.0.3: {}
 
-  typescript@5.9.3: {}
+  typescript@6.0.3: {}
 
   universalify@0.1.2: {}
 
