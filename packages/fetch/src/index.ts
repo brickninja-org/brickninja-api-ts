@@ -20,11 +20,13 @@ export async function fetchBrickNinjaApi<
   if(resolvedOptions.schema) {
     url.searchParams.set('v', resolvedOptions.schema);
   }
-  if(hasLanguage(resolvedOptions)) {
-    url.searchParams.set('lang', resolvedOptions.language);
+  const language = (resolvedOptions as Partial<LocalizedOptions>).language;
+  if(typeof language === 'string') {
+    url.searchParams.set('lang', language);
   }
-  if(hasAccessToken(resolvedOptions)) {
-    url.searchParams.set('access_token', resolvedOptions.accessToken);
+  const accessToken = (resolvedOptions as Partial<AuthenticatedOptions>).accessToken;
+  if(typeof accessToken === 'string') {
+    url.searchParams.set('access_token', accessToken);
   }
 
   // build request
@@ -57,8 +59,8 @@ export async function fetchBrickNinjaApi<
   const isJson = response.headers.get('content-type')?.startsWith('application/json') ?? false;
 
   // censor access token in url to not leak it in error messages
-  const erroredUrl = hasAccessToken(resolvedOptions)
-    ? url.toString().replace(resolvedOptions.accessToken, '***')
+  const erroredUrl = typeof accessToken === 'string'
+    ? url.toString().replace(accessToken, '***')
     : url.toString();
 
   // check if the response is an error
@@ -67,8 +69,12 @@ export async function fetchBrickNinjaApi<
     if(isJson) {
       const error: unknown = await response.json();
 
-      if(typeof error === 'object' && 'text' in error && typeof error.text === 'string') {
-        throw new BrickNinjaApiError(`The brick.ninja API call to '${erroredUrl}' returned ${response.status} ${response.statusText}: ${error.text}.`, response);
+      if(typeof error === 'object' && error !== null && 'text' in error) {
+        const errorText = (error as { text?: unknown }).text;
+
+        if(typeof errorText === 'string') {
+          throw new BrickNinjaApiError(`The brick.ninja API call to '${erroredUrl}' returned ${response.status} ${response.statusText}: ${errorText}.`, response);
+        }
       }
     }
 
@@ -121,16 +127,4 @@ export class BrickNinjaApiError extends Error {
     super(message);
     this.name = 'BrickNinjaApiError';
   }
-}
-
-function hasLanguage(options: unknown): options is LocalizedOptions {
-  return typeof options === 'object' && options !== null
-    && 'language' in options
-    && typeof (options as { language?: unknown }).language === 'string';
-}
-
-function hasAccessToken(options: unknown): options is AuthenticatedOptions {
-  return typeof options === 'object' && options !== null
-    && 'accessToken' in options
-    && typeof (options as { accessToken?: unknown }).accessToken === 'string';
 }
