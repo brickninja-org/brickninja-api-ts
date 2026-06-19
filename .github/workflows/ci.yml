@@ -87,6 +87,6 @@ jobs:
         with:
           title: New Release
           commit: Create new release
-          version: pnpm changeset version && pnpm install --lockfile-only --link-workspace-packages
+          version: pnpm run version
           publish: pnpm run release
           setupGitUser: false

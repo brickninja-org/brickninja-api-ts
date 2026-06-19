@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "test": "pnpm run -r test",
+    "version": "changeset version && pnpm install --lockfile-only --link-workspace-packages",
     "release": "pnpm run -r build && changeset publish"
   },
   "engines": {
