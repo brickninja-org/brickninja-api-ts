@@ -74,12 +74,9 @@ jobs:
 
       - name: Create Release Pull Request
         uses: changesets/action@v1.9.0
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
         with:
           title: New Release
           commit: Create new release
-          github-token: ${{ github.token }}
           version: pnpm run version
           publish: pnpm run release
           setupGitUser: false
