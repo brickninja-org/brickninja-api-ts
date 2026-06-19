@@ -47,19 +47,11 @@ jobs:
     if: github.event_name == 'push'
     permissions:
       contents: write
-      id-token: write
       pull-requests: write
     steps:
-      - uses: actions/create-github-app-token@v3.2.0
-        id: generate-token
-        with:
-          client-id: ${{ secrets.BRICKNINJA_APP_ID }}
-          private-key: ${{ secrets.BRICKNINJA_APP_PRIVATE_KEY }}
-
       - name: Checkout Repo
         uses: actions/checkout@v7.0.0
         with:
-          token: ${{ steps.generate-token.outputs.token }}
           fetch-depth: 0
 
       - name: Install pnpm
@@ -83,10 +75,11 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1.9.0
         env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           title: New Release
           commit: Create new release
+          github-token: ${{ github.token }}
           version: pnpm run version
           publish: pnpm run release
           setupGitUser: false
