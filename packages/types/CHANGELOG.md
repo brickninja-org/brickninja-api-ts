@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 0.3.1
+
+### Patch Changes
+
+- Correct the `/v2/elements` types so they match the API response shape, including numeric ids and the optional `icon` field.
+
 ## 0.3.0
 
 ### Minor Changes
