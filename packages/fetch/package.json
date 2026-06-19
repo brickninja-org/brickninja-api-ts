@@ -1,6 +1,6 @@
 {
   "name": "@brickninjaapi/fetch",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Tiny wrapper around fetch that returns type-safe responses",
   "license": "MIT",
   "main": "dist/index.js",
