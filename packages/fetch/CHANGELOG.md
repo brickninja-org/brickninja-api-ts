@@ -1,5 +1,11 @@
 # @brickninjaapi/fetch
 
+## 2.0.1
+
+### Patch Changes
+
+- Upgrade `@brickninjaapi/fetch` to TypeScript 6.0.3 and make its source compatible with the stricter TS 6 checks.
+
 ## 2.0.0
 
 ### Patch Changes
