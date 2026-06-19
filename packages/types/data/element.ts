@@ -1,10 +1,30 @@
 import type { SchemaAfter, SchemaVersion } from "../schema";
 
 /**
- * Element as returned from `/v1/elements` endpoint.
- * @see TODO: Update this type when the API changes.
+ * Element as returned from `/v2/elements` endpoint.
  */
-export interface Element {
+export type Element<Schema extends SchemaVersion = undefined> =
+  Schema extends undefined ? Element<Exclude<SchemaVersion, undefined>> :
+  Schema extends SchemaAfter<'2026-05-03T00:00:00Z'> | 'latest' ? ElementV2_2026_05_03 :
+  ElementBase;
+
+interface ElementBase {
+  /** The id of the element */
+  id: number;
+
+  /** The name of the element */
+  name: string;
+
+  /** The image URL of the element */
+  icon?: string;
+}
+
+type ElementV2_2026_05_03 = ElementBase;
+
+/**
+ * Element as returned from `/v1/elements` endpoint.
+ */
+export interface ElementV1 {
   /** The id of the element */
   id: number;
 
@@ -32,24 +52,6 @@ export interface Element {
     category?: string;
   };
 };
-
-/**
- * Element as returned from `/v2/elements` endpoint.
- */
-export type ElementV2<Schema extends SchemaVersion = undefined> =
-  Schema extends undefined ? ElementV2<Exclude<SchemaVersion, undefined>> :
-  Schema extends SchemaAfter<'2026-05-03T00:00:00Z'> | 'latest' ? ElementV2_2026_05_03 :
-  ElementV2Base;
-
-interface ElementV2Base {
-  /** The id of the element */
-  id: number;
-
-  /** The name of the element */
-  name: string;
-}
-
-type ElementV2_2026_05_03 = ElementV2Base;
 
 /**
  * Color as returned from `/v2/elements/colors?ids=...` endpoint
