@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@changeset-bot/changelog": "0.0.4",
-    "typescript": "6.0.3"
+    "typescript": "7.0.2"
   },
   "packageManager": "pnpm@11.8.0"
 }
