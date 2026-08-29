@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 1.0.0
+
+### Major Changes
+
+- Align the types with the current `/v2` API schema, add products and items, and remove legacy route and data types.
+
 ## 0.3.1
 
 ### Patch Changes
