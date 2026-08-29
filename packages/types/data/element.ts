@@ -5,7 +5,7 @@ import type { SchemaAfter, SchemaVersion } from "../schema";
  */
 export type Element<Schema extends SchemaVersion = undefined> =
   Schema extends undefined ? Element<Exclude<SchemaVersion, undefined>> :
-  Schema extends SchemaAfter<'2026-05-03T00:00:00Z'> | 'latest' ? ElementV2_2026_05_03 :
+  Schema extends SchemaAfter<'2026-08-29T00:00:00Z'> | 'latest' ? ElementV2_2026_08_29 :
   ElementBase;
 
 interface ElementBase {
@@ -16,42 +16,10 @@ interface ElementBase {
   name: string;
 
   /** The image URL of the element */
-  icon?: string;
+  icon: string;
 }
 
-type ElementV2_2026_05_03 = ElementBase;
-
-/**
- * Element as returned from `/v1/elements` endpoint.
- */
-export interface ElementV1 {
-  /** The id of the element */
-  id: number;
-
-  /** The name of the element */
-  name: string;
-
-  /** The image URL of the element */
-  icon?: string;
-
-  /** The type of the item  */
-  type: 'Default';
-
-  /** Element details */
-  details?: {
-    /** The color of the element */
-    color_id?: number;
-
-    /** The design id of the element */
-    design_id?: number;
-
-    /** The piece type of the element */
-    type?: 'DUPLO' | 'LEGO' | 'TECHNIC';
-
-    /** The category of the element */
-    category?: string;
-  };
-};
+type ElementV2_2026_08_29 = ElementBase;
 
 /**
  * Color as returned from `/v2/elements/colors?ids=...` endpoint
@@ -77,7 +45,7 @@ export type Color<Schema extends SchemaVersion = undefined> =
   color_family: 'Black' | 'Blue' | 'Brown' | 'Green' | 'Grey' | 'Lilac' | 'Metallic' | 'Multicombination' | 'Orange' | 'Purple' | 'Red' | 'White' | 'Yellow';
 
   /** List of element IDs that are part of this element color */
-  element_ids: string[],
+  element_ids: number[],
 }
 
 /**
@@ -91,7 +59,7 @@ export interface ElementSubcategory {
   name: string;
 
   /** List of design IDs that are part of this element subcategory */
-  designs_ids: number[];
+  design_ids: number[];
 }
 
 /**
@@ -119,11 +87,11 @@ export interface ElementDesign {
   name: string;
 
   /** The piece type of the design */
-  piece_type: 'DUPLO' | 'LEGO' | 'TECHNIC';
+  piece_type: string;
 
   /** The weight in grams of the design  */
   weight: number;
 
   /** List of element IDs that are part of this design */
-  element_ids: string[];
+  element_ids: number[];
 }

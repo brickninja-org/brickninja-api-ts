@@ -1,97 +1,36 @@
-/**
- * Product as returned from `/v1/products` endpoint.
- * @see TODO: Update this type when the API changes.
- */
 export interface Product {
-  /** The id of the product */
   id: number;
-
-  /** The name of the product */
+  product_code: string;
   name: string;
-
-  /** The description of the product */
-  description?: string;
-
-  /** The image URL of the product */
-  icon?: string;
-
-  /** The categories of the product */
-  categories?: number[];
-
-  /** Flags of the product */
-  flags?: ProductFlag[];
-
-  itemIds?: number[];
-
-  /** Product type */
-  type?: 'Set' | 'Figure';
-
-  /** The rarity of the product */
-  rarity?: 'Exclusive' | 'Retail';
-
-  /** Product details */
-  details?: {
-    /** The attributes of this product */
-    attributes?: ProductAttribute[];
-
-    /** The subtype of this product */
-    type?: string;
-  }
+  slug: string;
+  brand_category: string;
+  program_category: ProductProgramCategory | null;
+  images: ProductImage[];
+  product_types: ProductTaxonomy[];
+  interests: ProductTaxonomy[];
+  item_ids: number[];
 }
 
-export type ProductFlag = 'NoFigures' | 'ShowInCatalog';
-
-export type ProductAttribute = {
-  /** The label of the attribute */
-  text: string;
-  /** The type of the attribute */
-  type: 'ageRange' | 'dimensionsInMillimeters' | 'figureCount' | 'pieceCount' | 'weightInGrams'
-  /** The value of the attribute */
-  value: string | number | Array<string | number>;
+export interface ProductProgramCategory {
+  id: string;
+  name: string;
+  key: string | null;
 }
 
-export type Barcode = {
-  /** The type of the barcode */
-  type: 'UPC' | 'EAN' | 'ISBN';
-  /** The value of the barcode */
+export interface ProductImage {
+  type: string;
+  url: string;
+}
+
+export interface ProductTaxonomy {
+  label: string;
   value: string;
 }
 
-export type RegionInfo = Record<'CA' | 'DE' | 'GB' | 'US', {
-  /** The recommended retail price */
-  price: number;
-  /** The insider points for the product */
-  points?: number;
-  /** The product release date */
-  release_date?: Date;
-  /** The product discontinuation date */
-  discontinuation_date?: Date;
-}>;
-
 export interface ProductCategory {
-  /** The category id */
-  id: number;
-
-  /** The name of the category */
+  id: string;
+  type: 'product_type' | 'interest';
+  source_id: string;
   name: string;
-}
-
-export interface ProductInventoryList {
-  /** The ID of the product */
-  productId: number;
-
-  /** The items in the inventory */
-  items: {
-    /** The ID of the inventory item */
-    item_id: string;
-
-    /** The quantity of the inventory item */
-    quantity: number;
-  }[];
-
-  /** The total number of items in the inventory */
-  total_items: number;
-
-  /** The total quantity of the product in the inventory */
-  total_quantity: number;
+  product_ids: number[];
 }

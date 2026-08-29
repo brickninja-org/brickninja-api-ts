@@ -1,34 +1,58 @@
-import type { Createsubtoken } from './data/createsubtoken';
 import type { Color, ElementCategory, ElementDesign, ElementSubcategory, Element } from './data/element';
-import type { Theme } from './data/set';
-import type { Tokeninfo } from './data/tokeninfo';
+import type { Item } from './data/item';
+import type { Product, ProductCategory } from './data/product';
 import type { SchemaVersion } from "./schema";
 
-export type KnownAuthenticatedEndpoint =
-  | '/v2/account'
-  | '/v2/createsubtoken';
-
 export type KnownUnauthorizedEndpoint =
+  | '/v2'
+  | '/v2.json'
   | '/v2/build'
+  | '/v2/products'
+  | `/v2/products/${string}`
+  | '/v2/products/categories'
+  | `/v2/products/categories/${string}`
+  | '/v2/items'
+  | `/v2/items/${string}`
   | '/v2/elements'
+  | `/v2/elements/${string}`
   | '/v2/elements/colors'
+  | `/v2/elements/colors/${string}`
   | '/v2/elements/categories'
+  | `/v2/elements/categories/${string}`
   | '/v2/elements/designs'
+  | `/v2/elements/designs/${string}`
   | '/v2/elements/subcategories'
-  | '/v2/sets/themes';
+  | `/v2/elements/subcategories/${string}`;
 
 export type KnownBulkExpandedEndpoint =
+  | '/v2/products'
+  | '/v2/products/categories'
+  | '/v2/items'
   | '/v2/elements'
   | '/v2/elements/colors'
   | '/v2/elements/categories'
   | '/v2/elements/designs'
-  | '/v2/elements/subcategories'
-  | '/v2/sets/themes';
+  | '/v2/elements/subcategories';
 
 export type KnownLocalizedEndpoint =
-  | '/v2/sets/themes';
+  | '/v2/products'
+  | `/v2/products/${string}`
+  | '/v2/products/categories'
+  | `/v2/products/categories/${string}`
+  | '/v2/items'
+  | `/v2/items/${string}`
+  | '/v2/elements'
+  | `/v2/elements/${string}`
+  | '/v2/elements/colors'
+  | `/v2/elements/colors/${string}`
+  | '/v2/elements/categories'
+  | `/v2/elements/categories/${string}`
+  | '/v2/elements/designs'
+  | `/v2/elements/designs/${string}`
+  | '/v2/elements/subcategories'
+  | `/v2/elements/subcategories/${string}`;
 
-export type KnownEndpoint = KnownAuthenticatedEndpoint | KnownUnauthorizedEndpoint | KnownBulkExpandedEndpoint | KnownLocalizedEndpoint;
+export type KnownEndpoint = KnownUnauthorizedEndpoint | KnownBulkExpandedEndpoint | KnownLocalizedEndpoint;
 
 // helper types for parameters
 type CombineParameters<P1 extends string, P2 extends string> = `${P1}&${P2}` | `${P2}&${P1}`;
@@ -37,13 +61,31 @@ type WithParameters<Url extends string, Parameters extends string | undefined = 
 
 // helper for paginated endpoints
 type PaginationParameters = `page=${number}` | `page_size=${number}` | CombineParameters<`page=${number}`, `page_size=${number}`>;
+type BulkExpandedQueryParameters =
+  | `ids=${string}`
+  | PaginationParameters
+  | CombineParameters<`ids=${string}`, PaginationParameters>;
 type PaginatedEndpointUrl<Endpoint extends KnownEndpoint> = Endpoint | WithParameters<Endpoint, PaginationParameters>;
 
 // helper types for bulk requests
 type BulkExpandedSingleEndpointUrl<Endpoint extends KnownBulkExpandedEndpoint, Id extends string | number> = `${Endpoint}/${Id}` | WithParameters<Endpoint, `id=${Id}`>
-type BulkExpandedManyEndpointUrl<Endpoint extends KnownBulkExpandedEndpoint> = WithParameters<Endpoint, `ids=${string}` | PaginationParameters>
+type BulkExpandedManyEndpointUrl<Endpoint extends KnownBulkExpandedEndpoint> = WithParameters<Endpoint, BulkExpandedQueryParameters>
 type BulkExpandedEndpointUrl<Endpoint extends KnownBulkExpandedEndpoint, Id extends string | number> =
   Endpoint | BulkExpandedSingleEndpointUrl<Endpoint, Id> |  BulkExpandedManyEndpointUrl<Endpoint>;
+
+type ProductCategoryEndpointUrl =
+  | BulkExpandedEndpointUrl<'/v2/products/categories', string>
+  | WithParameters<'/v2/products/categories', `type=${'product_type' | 'interest'}`>
+  | WithParameters<'/v2/products/categories', CombineParameters<`type=${'product_type' | 'interest'}`, `ids=${string}`>>
+  | WithParameters<'/v2/products/categories', CombineParameters<`type=${'product_type' | 'interest'}`, PaginationParameters>>
+  | WithParameters<'/v2/products/categories', CombineParameters<`type=${'product_type' | 'interest'}`, CombineParameters<`ids=${string}`, PaginationParameters>>>;
+
+type ItemEndpointUrl =
+  | BulkExpandedEndpointUrl<'/v2/items', number>
+  | WithParameters<'/v2/items', `type=${'Product' | 'Element'}`>
+  | WithParameters<'/v2/items', CombineParameters<`type=${'Product' | 'Element'}`, `ids=${string}`>>
+  | WithParameters<'/v2/items', CombineParameters<`type=${'Product' | 'Element'}`, PaginationParameters>>
+  | WithParameters<'/v2/items', CombineParameters<`type=${'Product' | 'Element'}`, CombineParameters<`ids=${string}`, PaginationParameters>>>;
 
 type BulkExpandedResponseType<Endpoint extends KnownBulkExpandedEndpoint, Url extends string, Id extends string | number, T> =
   // base endpoint returns a list of ids
@@ -53,26 +95,15 @@ type BulkExpandedResponseType<Endpoint extends KnownBulkExpandedEndpoint, Url ex
   // handle single id requests (`endpoint/:id` and `endpoint?id=:id`)
   Url extends BulkExpandedSingleEndpointUrl<Endpoint, Id> ? T :
   // handle multiple id requests (either `endpoint?ids=:ids` or paginated)
-  Url extends BulkExpandedManyEndpointUrl<Endpoint> ? T[] :
+  Url extends `${Endpoint}?${infer Parameters}` ? Parameters extends `${string}ids=${string}` ? T[] : Id[] :
   // otherwise this is not a known bulk request
   unknown;
 
-// /v2/createsubtoken request
-type CreateSubtokenUrl<Url extends KnownEndpoint> =
-  | WithParameters<Url, CombineParameters<`expire=${string}`, CombineParameters<`permissions=${string}`, `urls=${string}`>>>
-  | WithParameters<Url, CombineParameters<`expire=${string}`, `permissions=${string}`>>
-  | WithParameters<Url, CombineParameters<`expire=${string}`, `urls=${string}`>>
-  | WithParameters<Url, CombineParameters<`permissions=${string}`, `urls=${string}`>>
-  | WithParameters<Url, `expire=${string}`>
-  | WithParameters<Url, `permissions=${string}`>
-  | WithParameters<Url, `urls=${string}`>
-  | Url;
-
-  // options
+// options
 type Options = {};
 
 export type LocalizedOptions = {
-  language?: 'de' | 'en' | 'nl';
+  language?: 'de' | 'en' | 'es' | 'fr' | 'nl';
 };
 
 export type AuthenticatedOptions = {
@@ -81,27 +112,31 @@ export type AuthenticatedOptions = {
 
 export type OptionsByEndpoint<Endpoint extends string> =
   Endpoint extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint & KnownUnauthorizedEndpoint & KnownLocalizedEndpoint, string | number> ? Options & LocalizedOptions :
-  Endpoint extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint & KnownAuthenticatedEndpoint & KnownLocalizedEndpoint, string | number> ? Options & AuthenticatedOptions & LocalizedOptions :
   Endpoint extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint & KnownLocalizedEndpoint, string | number> ? Options & LocalizedOptions :
-  Endpoint extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint & KnownAuthenticatedEndpoint, string | number> ? Options & AuthenticatedOptions :
-  Endpoint extends KnownAuthenticatedEndpoint & KnownLocalizedEndpoint ? Options & AuthenticatedOptions & LocalizedOptions :
-  Endpoint extends KnownAuthenticatedEndpoint ? Options & AuthenticatedOptions :
   Endpoint extends KnownLocalizedEndpoint ? Options & LocalizedOptions :
-  Endpoint extends CreateSubtokenUrl<'/v2/createsubtoken'> ? Options & AuthenticatedOptions :
   Endpoint extends KnownEndpoint | BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint, string | number> ? Options :
   Partial<AuthenticatedOptions & LocalizedOptions>;
 
 // result type for endpoint
 export type EndpointType<Url extends KnownEndpoint | (string & {}), Schema extends SchemaVersion = undefined> =
-  Url extends '/v2/account' ? { id: number } :
-  Url extends CreateSubtokenUrl<'/v2/createsubtoken'> ? Createsubtoken :
+  Url extends '/v2' | '/v2.json' ? string[] :
+  Url extends '/v2/build' ? { id: string } :
+  Url extends BulkExpandedEndpointUrl<'/v2/products', number> ? BulkExpandedResponseType<'/v2/products', Url, number, Product> :
+  Url extends ProductCategoryEndpointUrl ? BulkExpandedResponseType<'/v2/products/categories', Url, string, ProductCategory> :
+  Url extends ItemEndpointUrl ? BulkExpandedResponseType<'/v2/items', Url, number, Item> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements', number> ? BulkExpandedResponseType<'/v2/elements', Url, number, Element<Schema>> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/colors', number> ? BulkExpandedResponseType<'/v2/elements/colors', Url, number, Color<Schema>> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/categories', number> ? BulkExpandedResponseType<'/v2/elements/categories', Url, number, ElementCategory> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/designs', number> ? BulkExpandedResponseType<'/v2/elements/designs', Url, number, ElementDesign> :
   Url extends BulkExpandedEndpointUrl<'/v2/elements/subcategories', number> ? BulkExpandedResponseType<'/v2/elements/subcategories', Url, number, ElementSubcategory> :
-  Url extends BulkExpandedEndpointUrl<'/v2/sets/themes', number> ? BulkExpandedResponseType<'/v2/sets/themes', Url, number, Theme> :
-  Url extends '/v2/tokeninfo' ? Tokeninfo<Schema> :
+  Url extends `/v2/products/categories/${string}` ? ProductCategory :
+  Url extends `/v2/products/${string}` ? Product :
+  Url extends `/v2/items/${string}` ? Item :
+  Url extends `/v2/elements/colors/${string}` ? Color<Schema> :
+  Url extends `/v2/elements/categories/${string}` ? ElementCategory :
+  Url extends `/v2/elements/designs/${string}` ? ElementDesign :
+  Url extends `/v2/elements/subcategories/${string}` ? ElementSubcategory :
+  Url extends `/v2/elements/${string}` ? Element<Schema> :
   // fallback for all bulk expanded urls
   Url extends BulkExpandedEndpointUrl<KnownBulkExpandedEndpoint, string | number> ? BulkExpandedResponseType<KnownBulkExpandedEndpoint, Url, string | number, unknown> :
   // fallback for all other urls

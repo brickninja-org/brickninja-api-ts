@@ -4,17 +4,22 @@ TypeScript types for all datastructures used by the Brick Ninja API.
 
 ## Usage
 
-You can use this library to add strong types when working with the Brick Ninja API and not using `@brickninjaapi/fetch` or `@brickninjaapi/client`, for example when using your own api client, working with data from a database, or writing helper functions.
+You can use this library to add strong types when working with the Brick Ninja API without using `@brickninjaapi/fetch` or `@brickninjaapi/client`, for example with your own API client, data from a database, or helper functions.
 
 ```ts
-import type { BrickNinjaApi, EndpointType } from '@brickninjaapi/types';
+import type { EndpointType } from '@brickninjaapi/types/endpoints';
+import type { Product } from '@brickninjaapi/types/data/product';
 
-function getItemName(item: BrickNinjaApi.V1.Item) {
+function getProductName(product: Product) {
+  return product.name;
+}
+
+function getItemName(item: EndpointType<'/v2/items/123'>) {
   return item.name;
 }
 
-type ItemEndpointResponse = EndpointType<'/v2/items?ids=1,2,3'>;
-// -> Array<{ id: number, name: string, ... }>
+type ProductEndpointResponse = EndpointType<'/v2/products?ids=1,2,3'>;
+// -> Product[]
 ```
 
 ## Installation
