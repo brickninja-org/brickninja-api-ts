@@ -9,12 +9,12 @@
   "engines": {
     "npm": "please-use-pnpm",
     "yarn": "please-use-pnpm",
-    "pnpm": "11.8.0"
+    "pnpm": "11.25.0"
   },
   "devDependencies": {
     "@changeset-bot/changelog": "0.0.4",
     "@changesets/cli": "3.0.1",
     "typescript": "7.0.2"
   },
-  "packageManager": "pnpm@11.8.0"
+  "packageManager": "pnpm@11.25.0"
 }
