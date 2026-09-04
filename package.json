@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@changeset-bot/changelog": "0.0.4",
-    "@changesets/cli": "3.0.1",
+    "@changesets/cli": "3.0.2",
     "typescript": "7.0.2"
   },
   "packageManager": "pnpm@11.8.0"
