@@ -1,5 +1,11 @@
 # @brickninjaapi/types
 
+## 2.0.0
+
+### Major Changes
+
+- Align the API types and endpoint mappings with the Brick Ninja OpenAPI specification. This removes legacy fields and endpoint variants, adds the current commerce and inventory models, and changes item discriminators to lowercase `product` and `element`.
+
 ## 1.0.0
 
 ### Major Changes
