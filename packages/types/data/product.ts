@@ -29,8 +29,19 @@ export interface ProductTaxonomy {
 
 export interface ProductCategory {
   id: string;
-  type: 'product_type' | 'interest';
-  source_id: string;
+  type: 'product_type' | 'interest' | 'brand_category';
   name: string;
   product_ids: number[];
+}
+
+/** Inventory as returned from `/v2/products/:id/inventory`. */
+export interface ProductInventory {
+  product_id: number;
+  parts: ProductInventoryPart[];
+}
+
+export interface ProductInventoryPart {
+  element_id: string;
+  quantity: number;
+  is_spare: boolean;
 }

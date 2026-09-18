@@ -22,7 +22,7 @@ interface ElementBase {
 type ElementV2_2026_08_29 = ElementBase;
 
 /**
- * Color as returned from `/v2/elements/colors?ids=...` endpoint
+ * Color as returned from `/v2/colors?ids=...` endpoint
  */
 export type Color<Schema extends SchemaVersion = undefined> =
   Schema extends undefined ? BaseColor :
@@ -49,7 +49,7 @@ export type Color<Schema extends SchemaVersion = undefined> =
 }
 
 /**
- * ElementSubcategory as returned from `/v2/elements/subcategories`
+ * ElementSubcategory as returned from `/v2/subcategories`
  */
 export interface ElementSubcategory {
   /** The ID of the element subcategory */
@@ -63,7 +63,7 @@ export interface ElementSubcategory {
 }
 
 /**
- * ElementCategory as returned from `/v2/elements/categories
+ * ElementCategory as returned from `/v2/categories`
  */
 export interface ElementCategory {
   /** The ID of the element category */
@@ -76,8 +76,17 @@ export interface ElementCategory {
   subcategory_ids: number[];
 }
 
+/** OpenAPI name for the `/v2/categories` resource. */
+export type Category = ElementCategory;
+
+/** OpenAPI name for the `/v2/designs` resource. */
+export type Design = ElementDesign;
+
+/** OpenAPI name for the `/v2/subcategories` resource. */
+export type Subcategory = ElementSubcategory;
+
 /**
- * ElementDesign as returned from `/v2/elements/designs
+ * ElementDesign as returned from `/v2/designs`
  */
 export interface ElementDesign {
   /** The ID of the design */
